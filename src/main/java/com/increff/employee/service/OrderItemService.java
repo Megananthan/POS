@@ -18,7 +18,6 @@ public class OrderItemService {
 
 	@Transactional(rollbackOn = ApiException.class)
 	public void add(OrderItemPojo p) throws ApiException {
-//		checkBarcode(p);
 		dao.insert(p);
 	}
 

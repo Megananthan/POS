@@ -35,10 +35,10 @@ public class OrdersService {
 		return checkId(id);
 	}
 	
-	@Transactional(rollbackOn = ApiException.class)
-	public int getByTime(String time) throws ApiException {
-		return ((dao.selectTime(time)).getId());
-	}
+//	@Transactional(rollbackOn = ApiException.class)
+//	public int getByTime(String time) throws ApiException {
+//		return ((dao.selectTime(time)).getId());
+//	}
 
 
 	@Transactional

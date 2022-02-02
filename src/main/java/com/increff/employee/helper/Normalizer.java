@@ -6,7 +6,7 @@ import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.util.StringUtil;
 
-public class Normalize {
+public class Normalizer {
 
 	public static void normalize(BrandPojo b) {
 		b.setBrand(StringUtil.toLowerCase(b.getBrand()).trim());

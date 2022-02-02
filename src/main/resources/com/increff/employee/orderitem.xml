@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<orderDetail>
+    <item>
+        <barcode>a123</barcode>
+        <inventory>51</inventory>
+        <mrp>10.0</mrp>
+        <name>hide</name>
+        <productId>33</productId>
+        <quantity>1</quantity>
+    </item>
+    <orderId>2252</orderId>
+</orderDetail>

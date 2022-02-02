@@ -1,8 +1,8 @@
 package com.increff.employee.model;
 
-public class ItemForm extends ItemData{
+public class ItemForm {
 	
-private String barcode;
+    private String barcode;
 	
 	private String name;
 

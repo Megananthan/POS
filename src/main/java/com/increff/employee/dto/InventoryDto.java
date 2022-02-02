@@ -8,8 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.increff.employee.helper.Convert;
-import com.increff.employee.helper.Normalize;
+import com.increff.employee.helper.Convertor;
+import com.increff.employee.helper.Normalizer;
 import com.increff.employee.model.InventoryData;
 import com.increff.employee.model.InventoryForm;
 import com.increff.employee.pojo.InventoryPojo;
@@ -29,7 +29,7 @@ public class InventoryDto {
 		
 	@Transactional(rollbackOn = ApiException.class)
 	public void add(InventoryData inventorydata) throws ApiException {
-		Normalize.normalize(inventorydata);
+		Normalizer.normalize(inventorydata);
 		ProductPojo p=productservice.getByName(inventorydata.getName());
 		if(p==null)
 		{
@@ -41,7 +41,7 @@ public class InventoryDto {
 		if(i==null)
 		{	
 			f.setQuantity(inventorydata.getQuantity());
-			inventoryservice.add(Convert.convert(f));
+			inventoryservice.add(Convertor.convert(f));
 		}
 		else {
 			
@@ -58,7 +58,7 @@ public class InventoryDto {
 	public InventoryData get(int id) throws ApiException {
 		InventoryPojo i = inventoryservice.get(id);
 		ProductPojo p=productservice.get(id);
-		return Convert.convert(i,p.getName());
+		return Convertor.convert(i,p.getName());
 	}
 	
 	public List<InventoryData> getAll() throws ApiException {
@@ -66,13 +66,13 @@ public class InventoryDto {
 		List<InventoryData> listdata = new ArrayList<InventoryData>();
 		for (InventoryPojo i : listpojo) {
 			ProductPojo p=productservice.get(i.getId());
-			listdata.add(Convert.convert(i,p.getName()));
+			listdata.add(Convertor.convert(i,p.getName()));
 		}
 		return listdata;
 	}
 	
 	public void update(int id,InventoryForm f) throws ApiException {
-		InventoryPojo b = Convert.convert(f);
+		InventoryPojo b = Convertor.convert(f);
 		inventoryservice.update(id, b);
 	}
 	

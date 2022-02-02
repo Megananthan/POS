@@ -159,7 +159,7 @@ function submitOrder(event){
 	temp["rety"]=item;
 	console.log(JSON.stringify(temp));
 	item=JSON.stringify(item);
-
+    
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -169,6 +169,8 @@ function submitOrder(event){
 		},	   
 		success: function() {
 			alert('Order placed successfully');
+			$("#download-order").css("display","visible");
+			
 			item=[];
 			dict={};
 			count=0;

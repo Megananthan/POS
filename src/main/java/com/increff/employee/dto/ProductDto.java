@@ -8,8 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.increff.employee.helper.Convert;
-import com.increff.employee.helper.Normalize;
+import com.increff.employee.helper.Convertor;
+import com.increff.employee.helper.Normalizer;
 import com.increff.employee.model.ProductData;
 import com.increff.employee.model.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
@@ -34,8 +34,8 @@ public class ProductDto {
 	@Transactional(rollbackOn = ApiException.class)
 	public void add(ProductForm f) throws ApiException {
 		BrandPojo b=fetchBrand(f);
-		ProductPojo p=Convert.convert(f,b.getId());
-		Normalize.normalize(p);
+		ProductPojo p=Convertor.convert(f,b.getId());
+		Normalizer.normalize(p);
 		productservice.add(p);		
 	}
 	
@@ -61,8 +61,8 @@ public class ProductDto {
 	@Transactional(rollbackOn = ApiException.class)
 	public void update(int id,ProductForm f) throws ApiException {
 		BrandPojo b=fetchBrand(f);
-		ProductPojo p=Convert.convert(f,b.getId());
-		Normalize.normalize(p);
+		ProductPojo p=Convertor.convert(f,b.getId());
+		Normalizer.normalize(p);
 		productservice.update(id,p);
 	}
 	
@@ -78,7 +78,7 @@ public class ProductDto {
 	public ProductData fetchProduct(ProductPojo p) throws ApiException
 	{
 		BrandPojo b=brandservice.get(p.getBrand_category());
-		return(Convert.convert(p,b.getBrand(),b.getCategory()));
+		return(Convertor.convert(p,b.getBrand(),b.getCategory()));
 	}
 
 }

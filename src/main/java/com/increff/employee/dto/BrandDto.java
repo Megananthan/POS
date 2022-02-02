@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.increff.employee.helper.Convert;
-import com.increff.employee.helper.Normalize;
+import com.increff.employee.helper.Convertor;
+import com.increff.employee.helper.Normalizer;
 import com.increff.employee.model.BrandData;
 import com.increff.employee.model.BrandForm;
 import com.increff.employee.pojo.BrandPojo;
@@ -21,8 +21,8 @@ public class BrandDto {
 	private BrandService brandservice;
 	
 	public void add(BrandForm brandform) throws ApiException {
-		BrandPojo b=Convert.convert(brandform);
-		Normalize.normalize(b);
+		BrandPojo b=Convertor.convert(brandform);
+		Normalizer.normalize(b);
 		brandservice.add(b);
 	}
 	
@@ -32,21 +32,21 @@ public class BrandDto {
 	
 	public BrandData get(int id) throws ApiException {
 		BrandPojo b = brandservice.get(id);
-		return Convert.convert(b);
+		return Convertor.convert(b);
 	}
 	
 	public List<BrandData> getAll() {
 		List<BrandPojo> listpojo = brandservice.getAll();
 		List<BrandData> listdata = new ArrayList<BrandData>();
 		for (BrandPojo p : listpojo) {
-			listdata.add(Convert.convert(p));
+			listdata.add(Convertor.convert(p));
 		}
 		return listdata;
 	}
 	
 	public void update(int id,BrandForm f) throws ApiException {
-		BrandPojo b = Convert.convert(f);
-		Normalize.normalize(b);
+		BrandPojo b = Convertor.convert(f);
+		Normalizer.normalize(b);
 		brandservice.update(id, b);
 	}
 }

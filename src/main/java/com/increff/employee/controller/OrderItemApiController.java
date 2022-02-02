@@ -1,5 +1,6 @@
 package com.increff.employee.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,13 @@ public class OrderItemApiController {
 	
 	@ApiOperation(value = "Check an order")
 	@RequestMapping(path = "/api/orderitem/check", method = RequestMethod.POST)
-	public ItemData checkadd(@RequestBody OrderItemForm form) throws ApiException {
-		return dto.checkadd(form);
+	public ItemData checkbarcode(@RequestBody OrderItemForm form) throws ApiException {
+		return dto.checkbarcode(form);
 	}
 
 	@ApiOperation(value = "Adds an order")
 	@RequestMapping(path = "/api/orderitem", method = RequestMethod.POST)
-	public void add(@RequestBody List<ItemForm> form) throws ApiException {
+	public void add(@RequestBody List<ItemForm> form) throws ApiException, IOException {
 		dto.add(form);
 	}
 

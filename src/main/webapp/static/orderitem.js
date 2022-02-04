@@ -4,6 +4,23 @@ function getOrderItemUrl(){
 	return baseUrl + "/api/orderitem";
 }
 
+
+function downloadInvoice(event){
+	var url = getOrderItemUrl()+"/download";
+	$.ajax({
+		url: url,
+		type: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		},	   
+		success: function(response) {
+				  
+		},
+		error: handleAjaxError
+	 });
+
+}
+
 //variable to store all order item
 var item=[];
 var dict={};
@@ -191,6 +208,7 @@ function init(){
 	$('#refresh-data').click(getOrderItemList);
 	$('#cancel-order').click(cancelOrder);
 	$('#submit-order').click(submitOrder);
+	$('#download-order').click(downloadInvoice);
 
 	// if(item.length==0)
 	// {

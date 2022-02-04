@@ -2,7 +2,6 @@ package com.increff.employee.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.increff.employee.service.ApiException;
@@ -43,10 +42,16 @@ public class AppUiController extends AbstractUiController {
 		return mav("inventory.html");
 	}
 	
-	@RequestMapping(value="/ui/orderitem",method = RequestMethod.GET)
+	@RequestMapping(value="/ui/orderitem")
 	public ModelAndView orders() throws ApiException
 	{
 		return mav("orderitem.html");
+	}
+	
+	@RequestMapping(value="/ui/report")
+	public ModelAndView report() throws ApiException
+	{
+		return mav("report.html");
 	}
 
 }

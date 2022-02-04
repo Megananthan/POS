@@ -66,6 +66,12 @@ public class OrderItemDto {
 		
 	}
 	
+	
+//	@Transactional(rollbackOn = ApiException.class)
+//	public void download() throws ApiException, IOException {
+//		ConvertorJavaToXML.doGet();
+//	}
+//	
 //	public void delete(int id) {
 //		orderitemservice.delete(id);
 //	}

@@ -3,6 +3,7 @@ package com.increff.employee.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.increff.employee.dto.ReportDto;
 import com.increff.employee.model.BrandData;
 import com.increff.employee.model.InventoryData;
+import com.increff.employee.model.OrderItemData;
 import com.increff.employee.model.ProductData;
+import com.increff.employee.model.ReportForm;
 import com.increff.employee.service.ApiException;
 
 import io.swagger.annotations.Api;
@@ -39,7 +42,13 @@ public class ReportApiContrller {
 	@RequestMapping(path = "/api/report/brand", method = RequestMethod.GET)
 	public List<BrandData> getBrand() throws ApiException {
 		return(dto.getBrand());
-	}	
+	}
+	
+//	@ApiOperation(value = "Gets list of all order in the given period")
+//	@RequestMapping(path = "/api/report", method = RequestMethod.POST)
+//	public OrderItemData getOrderItem(@RequestBody ReportForm form) throws ApiException {
+//		return(dto.getOrderItem(form));
+//	}	
 	
 //	@ApiOperation(value = "Deletes a brand")
 //	@RequestMapping(path = "/api/brand/{id}", method = RequestMethod.DELETE)

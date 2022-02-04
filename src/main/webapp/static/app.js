@@ -51,3 +51,4 @@ function writeFileData(arr){
     tempLink.setAttribute('download', 'download.tsv');
     tempLink.click(); 
 }
+

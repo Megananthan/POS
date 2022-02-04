@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.increff.employee.helper.Convertor;
 import com.increff.employee.model.BrandData;
 import com.increff.employee.model.InventoryData;
+import com.increff.employee.model.OrderItemData;
 import com.increff.employee.model.ProductData;
+import com.increff.employee.model.ReportForm;
 import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.pojo.InventoryPojo;
 import com.increff.employee.pojo.ProductPojo;
@@ -68,6 +70,12 @@ public class ReportDto {
 		BrandPojo b=brandservice.get(p.getBrand_category());
 		return(Convertor.convert(p,b.getBrand(),b.getCategory()));
 	}
+	
+//	public OrderItemData getOrderItem(ReportForm form)
+//	{
+//		
+//	}
+	
 
 //	public void add(BrandForm brandform) throws ApiException {
 //		BrandPojo b=Convertor.convert(brandform);

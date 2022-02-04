@@ -66,40 +66,46 @@ function getBrandUrl(){
 // 	});
 // }
 
-function getBrand(event){
+function getBrand(){
 	var url = getBrandUrl() + "/brand";
+	// console.log("inside brand");
 
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
+		downloadBrand(data);
 		console.log(data);
 	   },
 	   error: handleAjaxError
 	});
 }
 
-function getProduct(event){
+function getProduct(){
 	var url = getBrandUrl() + "/product";
+	// console.log("inside product");
 
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
+		downloadProduct(data);
 		console.log(data);	   		  
 	   },
 	   error: handleAjaxError
 	});
 }
 
-function getInventory(event){
+function getInventory(){
 	var url = getBrandUrl() + "/inventory";
+	// console.log("inside inventory");
 
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
 	   		console.log(data);
+			downloadInventory(data);
 	   },
 	   error: handleAjaxError
 	});
@@ -156,9 +162,63 @@ function getInventory(event){
 
 // }
 
-// function downloadErrors(){
-// 	writeFileData(errorData);
-// }
+function downloadBrand(data){
+	var temp=[];
+	for(var i=0;i<data.length;i++){
+		var d={}
+		d["Brand name"]=data[i].brand;
+		d["Category"]=data[i].category;
+		temp.push(d);
+	}
+	writeFile(temp,'Brand-Report');
+}
+
+function downloadProduct(data){
+	var temp=[];
+	for(var i=0;i<data.length;i++){
+		var d={}
+		d["Product name"]=data[i].name;
+		d["Barcode"]=data[i].barcode;
+		d["Brand"]=data[i].brand;
+		d["Category"]=data[i].category;
+		d["MRP"]=data[i].mrp;
+		temp.push(d);
+	}
+	writeFile(temp,'Product-Report');
+}
+
+function downloadInventory(data){
+	var temp=[];
+	for(var i=0;i<data.length;i++){
+		var d={}
+		d["Product Name"]=data[i].name;
+		d["Quantity"]=data[i].quantity;
+		temp.push(d);
+	}
+	writeFile(temp,'Inventory-Report');
+}
+
+function writeFile(arr,name){
+	var config = {
+		quoteChar: '',
+		escapeChar: '',
+		delimiter: "\t"
+	};
+	var fileName=name+'.tsv';
+	var data = Papa.unparse(arr, config);
+    var blob = new Blob([data], {type: 'text/tsv;charset=utf-8;'});
+    var fileUrl =  null;
+
+    if (navigator.msSaveBlob) {
+        fileUrl = navigator.msSaveBlob(blob, fileName);
+    } else {
+        fileUrl = window.URL.createObjectURL(blob);
+    }
+    var tempLink = document.createElement('a');
+    tempLink.href = fileUrl;
+    tempLink.setAttribute('download', fileName);
+    tempLink.click(); 
+}
 
 // //UI DISPLAY METHODS
 
@@ -239,6 +299,7 @@ function init(){
 	// $('#download-errors').click(downloadErrors);
     // $('#brandFile').on('change', updateFileName)
 }
+
 
 $(document).ready(init);
 // $(document).ready(getBrandList);

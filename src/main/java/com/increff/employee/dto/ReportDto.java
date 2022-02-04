@@ -14,10 +14,12 @@ import com.increff.employee.model.ProductData;
 import com.increff.employee.model.ReportForm;
 import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.pojo.InventoryPojo;
+import com.increff.employee.pojo.OrderItemPojo;
 import com.increff.employee.pojo.ProductPojo;
 import com.increff.employee.service.ApiException;
 import com.increff.employee.service.BrandService;
 import com.increff.employee.service.InventoryService;
+import com.increff.employee.service.OrderItemService;
 import com.increff.employee.service.ProductService;
 
 @Service
@@ -31,6 +33,9 @@ public class ReportDto {
 
 	@Autowired
 	private InventoryService inventoryservice;
+	
+	@Autowired
+	private OrderItemService orderitemservice;
 
 	public List<InventoryData> getInventory() throws ApiException {
 		
@@ -71,10 +76,17 @@ public class ReportDto {
 		return(Convertor.convert(p,b.getBrand(),b.getCategory()));
 	}
 	
-//	public OrderItemData getOrderItem(ReportForm form)
-//	{
-//		
-//	}
+	public List<OrderItemData> getOrderItem(ReportForm form) throws ApiException
+	{
+		List<OrderItemPojo> listpojo = orderitemservice.getOrderItemList(form);
+		List<OrderItemData> listdata = new ArrayList<OrderItemData>();
+		for (OrderItemPojo p : listpojo) {
+			ProductPojo product=productservice.get(p.getProductId());
+			BrandPojo brand=brandservice.get(product.getBrand_category());
+			listdata.add(Convertor.convert(p,product.getBarcode(),product.getName(),brand.getBrand(),brand.getCategory()));
+		}
+		return listdata;
+	}
 	
 
 //	public void add(BrandForm brandform) throws ApiException {

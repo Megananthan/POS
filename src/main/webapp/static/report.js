@@ -66,6 +66,50 @@ function getBrandUrl(){
 // 	});
 // }
 
+function getOrderItemList(){
+	var url = getBrandUrl();
+	var $form = $("#report-form");
+	var input={}
+	var json = toJson($form);
+	console.log("json:");
+	console.log(JSON.parse(json));
+	input["startDate"]=JSON.parse(json).startDate+" 00:00:00";
+	input["endDate"]=JSON.parse(json).endDate+" 23:59:59";
+	if(JSON.parse(json).brand=='')
+	{
+		input["brand"]="%";
+	}
+	else{
+		input["brand"]=JSON.parse(json).brand;
+	}
+	if(JSON.parse(json).category=='')
+	{
+		input["category"]="%";
+	}
+	else{
+		input["category"]=JSON.parse(json).category;
+	}
+	input=JSON.stringify(input)
+	console.log("input:");
+    console.log(input);
+	$.ajax({
+		url: url,
+		type: 'POST',
+		data: input,
+		headers: {
+		'Content-Type': 'application/json'
+		},	   
+		success: function(response) {
+			writeFile(response,"Order-Item-List");  
+		},
+		error: handleAjaxError
+	});
+		
+			return false;
+
+}
+
+
 function getBrand(){
 	var url = getBrandUrl() + "/brand";
 	// console.log("inside brand");
@@ -294,7 +338,7 @@ function init(){
 	$('#get-brand').click(getBrand);
 	$('#get-product').click(getProduct);
 	$('#get-inventory').click(getInventory);
-	// $('#upload-data').click(displayUploadData);
+	$('#search').click(getOrderItemList);
 	// $('#process-data').click(processData);
 	// $('#download-errors').click(downloadErrors);
     // $('#brandFile').on('change', updateFileName)

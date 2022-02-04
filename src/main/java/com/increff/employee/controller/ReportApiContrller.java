@@ -44,11 +44,11 @@ public class ReportApiContrller {
 		return(dto.getBrand());
 	}
 	
-//	@ApiOperation(value = "Gets list of all order in the given period")
-//	@RequestMapping(path = "/api/report", method = RequestMethod.POST)
-//	public OrderItemData getOrderItem(@RequestBody ReportForm form) throws ApiException {
-//		return(dto.getOrderItem(form));
-//	}	
+	@ApiOperation(value = "Gets list of all order in the given period")
+	@RequestMapping(path = "/api/report", method = RequestMethod.POST)
+	public List<OrderItemData> getOrderItem(@RequestBody ReportForm form) throws ApiException {
+		return(dto.getOrderItem(form));
+	}	
 	
 //	@ApiOperation(value = "Deletes a brand")
 //	@RequestMapping(path = "/api/brand/{id}", method = RequestMethod.DELETE)

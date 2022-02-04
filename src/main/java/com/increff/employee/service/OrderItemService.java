@@ -1,5 +1,6 @@
 package com.increff.employee.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.increff.employee.dao.OrderItemDao;
+import com.increff.employee.model.ReportForm;
 import com.increff.employee.pojo.OrderItemPojo;
 
 @Service
@@ -34,6 +36,17 @@ public class OrderItemService {
 	@Transactional
 	public List<OrderItemPojo> getAll() {
 		return dao.selectAll();
+	}
+	
+	@Transactional
+	public List<OrderItemPojo> getOrderItemList(ReportForm f) throws ApiException {
+		List<Integer> list_id=dao.selectWithRange(f.getStartDate(),f.getEndDate(),f.getBrand(),f.getCategory());
+		List<OrderItemPojo> result = new ArrayList<OrderItemPojo>();
+		for(int i: list_id)
+		{
+			result.add(get(i));
+		}
+		return result;
 	}
 
 //	@Transactional(rollbackOn  = ApiException.class)

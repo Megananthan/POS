@@ -28,6 +28,7 @@
 		<javax.servlet.version>3.1.0</javax.servlet.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<fop.version>2.3</fop.version>
+		<!-- <jackson.version>2.4.0</jackson.version>-->
 
 		<!-- Jetty configuration -->
 		<jetty.version>9.4.22.v20191022</jetty.version>
@@ -40,6 +41,24 @@
 
 	<dependencies>
 
+		<!-- <dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-parameter-names</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jdk8</artifactId>
+			<version>2.6.3</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+-->
 		<!-- SPRING -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -178,7 +197,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-	  <!-- PDF convertion -->
+		<!-- PDF convertion -->
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>fop</artifactId>

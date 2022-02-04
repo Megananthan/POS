@@ -1,26 +1,49 @@
 package com.increff.employee.model;
 
-import java.time.LocalDateTime;
-
 public class ReportForm {
 
-	private LocalDateTime startDate; 
-	
-	private LocalDateTime endDate;
-	
-	public LocalDateTime getStartDate() {
+//	@JsonDeserialize(using = LocalDateDeserializer.class)
+//	@JsonSerialize(using = LocalDateSerializer.class)
+	private String startDate;
+
+//	@JsonDeserialize(using = LocalDateDeserializer.class)
+//	@JsonSerialize(using = LocalDateSerializer.class)
+	private String endDate;
+
+	private String brand;
+
+	private String category;
+
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(LocalDateTime startDate) {
+
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public LocalDateTime getEndDate() {
+
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(LocalDateTime endDate) {
+
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	
-	
-	
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 }

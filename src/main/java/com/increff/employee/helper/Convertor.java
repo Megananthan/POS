@@ -10,6 +10,7 @@ import com.increff.employee.model.InventoryForm;
 import com.increff.employee.model.ItemData;
 import com.increff.employee.model.ItemForm;
 import com.increff.employee.model.OrderDetail;
+import com.increff.employee.model.OrderItemData;
 import com.increff.employee.model.ProductData;
 import com.increff.employee.model.ProductForm;
 import com.increff.employee.pojo.BrandPojo;
@@ -112,5 +113,19 @@ public class Convertor {
 		d.setItem(form);
 		return d;
 	}
+	
+	public static OrderItemData convert(OrderItemPojo p,String barcode,String name,String brand,String category) {
+		OrderItemData d = new OrderItemData();
+		d.setOrderId(p.getOrdersId());
+		d.setName(name);
+		d.setBarcode(barcode);
+		d.setQuantity(p.getQuantity());
+		d.setBrand(brand);
+		d.setCategory(category);
+		d.setMrp(p.getSellingPrice());
+		return d;
+	}
+	
+   
 
 }

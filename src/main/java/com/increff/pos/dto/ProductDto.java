@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.increff.pos.helper.Convertor;
 import com.increff.pos.helper.Normalizer;
+import com.increff.pos.helper.Validate;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
 import com.increff.pos.pojo.BrandPojo;
@@ -33,6 +34,7 @@ public class ProductDto {
 	
 	@Transactional(rollbackOn = ApiException.class)
 	public void add(ProductForm f) throws ApiException {
+		Validate.isEmpty(f);
 		BrandPojo b=fetchBrand(f);
 		ProductPojo p=Convertor.convert(f,b.getId());
 		Normalizer.normalize(p);
@@ -60,6 +62,7 @@ public class ProductDto {
 	
 	@Transactional(rollbackOn = ApiException.class)
 	public void update(int id,ProductForm f) throws ApiException {
+		Validate.isEmpty(f);
 		BrandPojo b=fetchBrand(f);
 		ProductPojo p=Convertor.convert(f,b.getId());
 		Normalizer.normalize(p);

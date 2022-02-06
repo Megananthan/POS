@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.increff.pos.helper.Convertor;
 import com.increff.pos.helper.Normalizer;
+import com.increff.pos.helper.Validate;
 import com.increff.pos.model.InventoryData;
 import com.increff.pos.model.InventoryForm;
 import com.increff.pos.pojo.InventoryPojo;
@@ -29,6 +30,7 @@ public class InventoryDto {
 		
 	@Transactional(rollbackOn = ApiException.class)
 	public void add(InventoryData inventorydata) throws ApiException {
+		Validate.isEmpty(inventorydata);
 		Normalizer.normalize(inventorydata);
 		ProductPojo p=productservice.getByName(inventorydata.getName());
 		if(p==null)
@@ -72,6 +74,7 @@ public class InventoryDto {
 	}
 	
 	public void update(int id,InventoryForm f) throws ApiException {
+		Validate.isEmpty(f);
 		InventoryPojo b = Convertor.convert(f);
 		inventoryservice.update(id, b);
 	}

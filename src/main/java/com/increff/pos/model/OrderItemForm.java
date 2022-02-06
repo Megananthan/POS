@@ -22,6 +22,4 @@ public class OrderItemForm {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
-	
 }

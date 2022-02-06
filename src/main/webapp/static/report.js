@@ -89,6 +89,7 @@ function getOrderItemList(){
 	else{
 		input["category"]=JSON.parse(json).category;
 	}
+	pass=input;
 	input=JSON.stringify(input)
 	console.log("input:");
     console.log(input);
@@ -100,7 +101,8 @@ function getOrderItemList(){
 		'Content-Type': 'application/json'
 		},	   
 		success: function(response) {
-			writeFile(response,"Order-Item-List");  
+			displayItemList(response,pass);
+			// writeFile(response,"Order-Item-List");  
 		},
 		error: handleAjaxError
 	});
@@ -266,22 +268,174 @@ function writeFile(arr,name){
 
 // //UI DISPLAY METHODS
 
-// function displayBrandList(data){
-// 	var $tbody = $('#brand-table').find('tbody');
-// 	$tbody.empty();
-// 	for(var i in data){
-// 		var e = data[i];
-// 		var buttonHtml = '<button onclick="deleteBrand(' + e.id + ')">delete</button>'
-// 		buttonHtml += ' <button onclick="displayEditBrand(' + e.id + ')">edit</button>'
-// 		var row = '<tr>'
-// 		+ '<td>' + e.id + '</td>'
-// 		+ '<td>' + e.brand + '</td>'
-// 		+ '<td>'  + e.category + '</td>'
-// 		+ '<td>' + buttonHtml + '</td>'
-// 		+ '</tr>';
-//         $tbody.append(row);
-// 	}
-// }
+function displayItemList(data,input){
+	var $tbody = $('#report-table').find('tbody');
+	var $thead = $('#report-table').find('thead');
+	var $tfoot = $('#report-table').find('tfoot');
+	$thead.empty();
+	$tbody.empty();
+	$tfoot.empty();
+	var foot='<tr style="text-align: center;">' 
+	+'<td style="text-align: center;"colspan="4">No Record Found</td>'                             
+    +'</tr>';
+	$tfoot.append(foot);
+	var head=' <tr>'
+	+'<th class="brand_col" scope="col">Brand Name</th>'
+	+'<th class="category_col" scope="col">Category</th>'
+	+'<th class="product_col" scope="col">Product</th>'
+	+'<th scope="col">Revenue</th>'
+    +'</tr>';
+	$thead.append(head);
+	$("#norecord").css("display","visible");
+	var check={}
+	console.log(input["brand"]);
+	console.log(input["category"]);
+	console.log(JSON.stringify(data));
+
+
+	if(input["brand"]!="%" && input["category"]!="%")
+	{	
+		$(".product_col").css("display","visible");
+		console.log("inside brand cat");
+		for(var i in data){
+			var e = data[i];
+			if(e.brand==input["brand"] && e.category==input["category"] )
+			{
+					if(check[e.name]==null)
+				{
+					check[e.name]=e.quantity*e.mrp;
+				}
+				else{
+					check[e.name]+=e.quantity*e.mrp;
+				}
+			}
+		}
+		if(Object.keys(check).length!=0){
+			console.log("not empty");
+			console.log(check);
+			console.log(Object.keys(check).length);
+			$("#norecord").css("display","none");
+		}
+		for(var i in check){
+			var row = '<tr>'
+			+ '<td  class="brand_col"></td>'
+			+ '<td class="category_col"></td>'
+			+ '<td class="product_col">' + i + '</td>'
+			+ '<td>'  + check[i] + '</td>'
+			+ '</tr>';
+			$tbody.append(row);
+		}
+		$(".category_col").css("display","none");
+		$(".brand_col").css("display","none");
+		$(".product_col").css("display","visible");
+
+		
+	}
+	else if(input["brand"]=="%" && input["category"]!="%")
+	{
+		$(".brand_col").css("display","visible");
+		console.log("inside brand");
+		for(var i in data){
+			var e = data[i];
+			if(e.category==input["category"])
+			{
+					if(check[e.brand]==null)
+				{
+					check[e.brand]=e.quantity*e.mrp;
+				}
+				else{
+					check[e.brand]+=e.quantity*e.mrp;
+				}
+			}
+		}
+		if(Object.keys(check).length!=0){
+			$("#norecord").css("display","none");
+		}
+		for(var i in check){
+			var row = '<tr>'
+			+ '<td  class="brand_col">' + i + '</td>'
+			+ '<td class="category_col"></td>'
+			+ '<td class="product_col"></td>'
+			+ '<td>'  + check[i] + '</td>'
+			+ '</tr>';
+			$tbody.append(row);
+		}
+		$(".category_col").css("display","none");
+		$(".product_col").css("display","none");
+		$(".brand_col").css("display","visible");
+
+		
+	}
+	else if(input["brand"]!="%" && input["category"]=="%")
+	{
+		$(".category_col").css("display","visible");
+		for(var i in data){
+			var e = data[i];
+			if(e.brand==input["brand"])
+			{
+					if(check[e.category]==null)
+				{
+					check[e.category]=e.quantity*e.mrp;
+				}
+				else{
+					check[e.category]+=e.quantity*e.mrp;
+				}
+			}
+		}
+		if(Object.keys(check).length!=0){
+			$("#norecord").css("display","none");
+		}
+		for(var i in check){
+			var row = '<tr>'
+			+ '<td  class="brand_col"></td>'
+			+ '<td class="category_col">' + i + '</td>'
+			+ '<td class="product_col"></td>'
+			+ '<td>'  + check[i] + '</td>'
+			+ '</tr>';
+			$tbody.append(row);
+		}
+		$(".brand_col").css("display","none");
+		$(".product_col").css("display","none");
+		$(".category_col").css("display","visible");
+
+		
+	}
+	else
+	{
+		$(".product_col").css("display","visible");
+		for(var i in data){
+			var e = data[i];
+			if(check[e.name]==null)
+			{
+				check[e.name]=e.quantity*e.mrp;
+			}
+			else{
+				check[e.name]+=e.quantity*e.mrp;
+			}
+		}
+		if(Object.keys(check).length!=0){
+			$("#norecord").css("display","none");
+		}
+		for(var i in check){
+			var row = '<tr>'
+			+ '<td  class="brand_col"></td>'
+			+ '<td class="category_col"></td>'
+			+ '<td class="product_col">' + i + '</td>'
+			+ '<td>'  + check[i] + '</td>'
+			+ '</tr>';
+			$tbody.append(row);
+		}
+		$(".category_col").css("display","none");
+		$(".brand_col").css("display","none");
+		$(".product_col").css("display","visible");
+		
+	}
+	if(Object.keys(check).length==0){
+		console.log("empty");
+		$("#norecord").css("display","visible");
+	}
+
+}
 
 // function displayEditBrand(id){
 // 	var url = getBrandUrl() + "/" + id;

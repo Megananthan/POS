@@ -119,7 +119,8 @@ function uploadRows(){
        	'Content-Type': 'application/json'
        },	   
 	   success: function(response) {
-	   		uploadRows();  
+	   		uploadRows();
+			getBrandList()  
 	   },
 	   error: function(response){
 	   		row.error=response.responseText
@@ -139,21 +140,22 @@ function downloadErrors(){
 function displayBrandList(data){
 	var $tbody = $('#brand-table').find('tbody');
 	$tbody.empty();
+	var c=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteBrand(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditBrand(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button class="btn btn-primary delete_btn" onclick="deleteBrand(' + e.id + ')">delete</button>'
+		buttonHtml += ' <button class="btn btn-primary edit_btn" onclick="displayEditBrand(' + e.id + ')">edit</button>'
 		var row = '<tr>'
-		// +'<div style="display:none;" class="coloumn">'
-		+ '<td class="testing">' + e.id + '</td>'
-		// +'</div>'
+		+ '<td class="coloumn">' + e.id + '</td>'
+		+ '<td>' + c + '</td>'
 		+ '<td>' + e.brand + '</td>'
 		+ '<td>'  + e.category + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+		c++;
 	}
-	// $(".testing").css('display','none');
+
 
 }
 

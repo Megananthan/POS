@@ -115,16 +115,19 @@ function downloadErrors(){
 function displayInventoryList(data){
 	var $tbody = $('#inventory-table').find('tbody');
 	$tbody.empty();
+	var c=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml =' <button onclick="displayEditInventory(' + e.id + ')">edit</button>';
+		var buttonHtml =' <button class="btn btn-primary edit_btn" onclick="displayEditInventory(' + e.id + ')">edit</button>';
 		var row = '<tr>'
-		+ '<td>' + e.id + '</td>'
+		+ '<td class="coloumn">' + e.id + '</td>'
+		+ '<td>' + c + '</td>'
 		+ '<td>' + e.name + '</td>'
 		+ '<td>'  + e.quantity + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+		c++;
 	}
 }
 

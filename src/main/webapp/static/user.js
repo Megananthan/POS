@@ -58,16 +58,19 @@ function displayUserList(data){
 	console.log('Printing user data');
 	var $tbody = $('#user-table').find('tbody');
 	$tbody.empty();
+	var c=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteUser(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditUser(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button class="btn btn-primary delete_btn" onclick="deleteUser(' + e.id + ')">delete</button>'
 		var row = '<tr>'
-		+ '<td>' + e.id + '</td>'
+		+ '<td class="coloumn">' + e.id + '</td>'
+		+ '<td>' + c + '</td>'
 		+ '<td>' + e.email + '</td>'
+		+ '<td>' + e.role + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+		c++;
 	}
 }
 

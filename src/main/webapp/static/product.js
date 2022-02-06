@@ -120,6 +120,7 @@ function uploadRows(){
        },	   
 	   success: function(response) {
 	   		uploadRows();  
+			getProductList();
 	   },
 	   error: function(response){
 	   		row.error=response.responseText
@@ -139,12 +140,14 @@ function downloadErrors(){
 function displayProductList(data){
 	var $tbody = $('#product-table').find('tbody');
 	$tbody.empty();
+	var c=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteProduct(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditProduct(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button class="btn btn-primary delete_btn" onclick="deleteProduct(' + e.id + ')">delete</button>'
+		buttonHtml += ' <button class="btn btn-primary edit_btn" onclick="displayEditProduct(' + e.id + ')">edit</button>'
 		var row = '<tr>'
-		+ '<td>' + e.id + '</td>'
+		+ '<td class="coloumn">' + e.id + '</td>'
+		+ '<td>' + c + '</td>'
 		+ '<td>' + e.barcode + '</td>'
 		+ '<td>' + e.brand + '</td>'
 		+ '<td>' + e.category + '</td>'
@@ -153,6 +156,7 @@ function displayProductList(data){
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+		c++;
 	}
 }
 

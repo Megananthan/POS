@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.increff.pos.helper.Convertor;
 import com.increff.pos.helper.Normalizer;
+import com.increff.pos.helper.Validate;
 import com.increff.pos.model.ItemData;
 import com.increff.pos.model.ItemForm;
 import com.increff.pos.model.OrderItemForm;
@@ -37,9 +38,9 @@ public class OrderItemDto {
 	@Autowired
 	private OrdersService orderservice;
 	
-	
 	@Transactional(rollbackOn = ApiException.class)
 	public ItemData checkbarcode(OrderItemForm f) throws ApiException {
+		Validate.isEmpty(f);
 		Normalizer.normalize(f);
 		ProductPojo p=productservice.fetchProduct(f.getBarcode());
 		InventoryPojo i=inventoryservice.get(p.getId());
@@ -58,43 +59,11 @@ public class OrderItemDto {
 		ConvertorJavaToXML.jaxbObjectToXML(Convertor.convert(p.getId(),p.getTime(),f));
 		ConvertorJavaToXML.generatePDF();
 		for(ItemForm i : f) {
+			Validate.isEmpty(i);
 			inventory.setId(i.getProductId());
 			inventory.setQuantity(i.getQuantity());
 			inventoryservice.order(inventory);
 			orderitemservice.add(Convertor.convert(i,p.getId()));
-		}
-		
+		}	
 	}
-	
-	
-//	@Transactional(rollbackOn = ApiException.class)
-//	public void download() throws ApiException, IOException {
-//		ConvertorJavaToXML.doGet();
-//	}
-//	
-//	public void delete(int id) {
-//		orderitemservice.delete(id);
-//	}
-	
-//	public OrderItemData get(int id) throws ApiException {
-//		OrderItemPojo p = orderitemservice.get(id);
-//		return Convertor.convert(p);
-//	}
-	
-//	public List<OrderItemData> getAll() throws ApiException {
-//		List<OrderItemPojo> listpojo = orderitemservice.getAll();
-//		List<OrderItemData> listdata = new ArrayList<OrderItemData>();
-//		for (OrderItemPojo p : listpojo) {
-//			listdata.add(Convertor.convert(p));
-//		}
-//		return listdata;
-//	}
-		
-	
-	
-	
-	
-	
-
-
 }

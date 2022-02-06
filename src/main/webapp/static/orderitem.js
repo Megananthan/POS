@@ -75,6 +75,15 @@ function updateOrderItem(event){
 	//Get the Barcode
 	var barcode = $("#orderitem-edit-form input[name=barcode]").val();
 	var quantity= $("#orderitem-edit-form input[name=quantity]").val();
+	if(barcode=="")
+	{
+		alert("Barcode cannot be empty");
+		return false;
+	}
+	if(quantity<1){
+		alert("Quantity should be greater than 0");
+		return false;
+	}
 	var n=dict[barcode];	
 	if(item[n].inventory<quantity)
 		{	
@@ -118,14 +127,16 @@ function displayOrderItemList(data){
 	var $tbody = $('#orderitem-table').find('tbody');
 	$tbody.empty();
 	var amt=0;
+	var c=1;
 	for(var i in data){
 		var e = data[i];
 		var number=dict[e.barcode];
 		amt+=(e.mrp*e.quantity)
 		// console.log("list "+number);
-		var buttonHtml = '<button onclick="deleteOrderItem('+number+')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditOrderItem('+number+')">edit</button>'
+		var buttonHtml = '<button class="btn btn-primary delete_btn" onclick="deleteOrderItem('+number+')">delete</button>'
+		buttonHtml += ' <button class="btn btn-primary edit_btn" onclick="displayEditOrderItem('+number+')">edit</button>'
 		var row = '<tr>'
+		+ '<td>' + c + '</td>'
 		+ '<td>' + e.barcode + '</td>'
 		+ '<td>' + e.name + '</td>'
 		+ '<td>' + e.quantity + '</td>'
@@ -134,20 +145,21 @@ function displayOrderItemList(data){
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+		c++;
 	}
 	var row = '<tr>'
 		+ '<td></td>'
 		+ '<td></td>'
 		+ '<td></td>'
-		+ '<td>Total Amount : </td>'
-		+ '<td> ' + amt + ' </td>'
+		+ '<td></td>'
+		+ '<td style="font-weight:bold;">Total Amount : </td>'
+		+ '<td style="font-weight:bold;"> ' + amt + ' </td>'
 		+ '<td></td>'
 		+ '</tr>';
 	$tbody.append(row);
 }
 
 function displayEditOrderItem(n){
-	
 	displayOrderItem(item[n]);
 }
 

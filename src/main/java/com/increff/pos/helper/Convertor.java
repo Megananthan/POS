@@ -107,10 +107,15 @@ public class Convertor {
 	}
 
 	public static OrderDetail convert(int order_id,LocalDateTime time,List<ItemForm> form) {
+		double total=0;
 		OrderDetail d = new OrderDetail();
 		d.setOrderId(order_id);
-//		d.setTime(time);
+		d.setTime(time);
 		d.setItem(form);
+		for(ItemForm i :form) {
+			total+=i.getMrp()*i.getQuantity();
+		}
+		d.setTotal(total);
 		return d;
 	}
 	

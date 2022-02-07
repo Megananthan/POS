@@ -21,7 +21,10 @@ function addProduct(event){
 	   success: function(response) {
 	   		getProductList();  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -47,7 +50,10 @@ function updateProduct(event){
 	   success: function(response) {
 	   		getProductList();   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -62,7 +68,10 @@ function getProductList(){
 	   success: function(data) {
 	   		displayProductList(data);  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -75,7 +84,10 @@ function deleteProduct(id){
 	   success: function(data) {
 	   		getProductList();  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -123,9 +135,10 @@ function uploadRows(){
 			getProductList();
 	   },
 	   error: function(response){
-	   		row.error=response.responseText
-	   		errorData.push(row);
-	   		uploadRows();
+		row.error=JSON.parse(response.responseText).message
+		errorData.push(row);
+		uploadRows();
+		getProductList();
 	   }
 	});
 
@@ -168,7 +181,10 @@ function displayEditProduct(id){
 	   success: function(data) {
 	   		displayProduct(data);   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});	
 }
 

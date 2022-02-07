@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <orderDetail>
+    <time>07-02-2022 12:41:08</time>
     <item>
         <barcode>a1</barcode>
-        <inventory>129</inventory>
+        <inventory>80</inventory>
         <mrp>10.0</mrp>
         <name>bisc</name>
         <productId>56</productId>
-        <quantity>14</quantity>
+        <quantity>1</quantity>
     </item>
-    <orderId>2402</orderId>
+    <orderId>3352</orderId>
+    <total>10.0</total>
 </orderDetail>

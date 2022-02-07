@@ -11,6 +11,19 @@ function toJson($form){
     return json;
 }
 
+function errorDisplay(template,message){
+    var $errorbar=$('#status-bar');
+    var text='Success! ';
+    if(template=='danger'){
+        text='Failed! ';
+    }
+    $errorbar.empty();
+    var str='<div class="alert alert-'+template + ' alert-dismissable">'+
+        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+
+        '<strong>'+ text + '</strong>' + message +
+        '</div>';
+    $errorbar.append(str);
+}
 
 function handleAjaxError(response){
 	var response = JSON.parse(response.responseText);

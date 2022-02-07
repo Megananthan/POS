@@ -25,7 +25,10 @@ function updateInventory(event){
 	   success: function(response) {
 	   		getInventoryList();   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -40,7 +43,10 @@ function getInventoryList(){
 	   success: function(data) {
 	   		displayInventoryList(data);  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -99,9 +105,10 @@ function uploadRows(){
 			getInventoryList();  
 	   },
 	   error: function(response){
-	   		row.error=response.responseText
-	   		errorData.push(row);
-	   		uploadRows();
+		row.error=JSON.parse(response.responseText).message
+		errorData.push(row);
+		uploadRows();
+		getInventoryList();
 	   }
 	});
 }
@@ -139,7 +146,10 @@ function displayEditInventory(id){
 	   success: function(data) {
 	   		displayInventory(data);   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});	
 }
 

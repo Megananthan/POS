@@ -119,12 +119,15 @@ function uploadRows(){
        	'Content-Type': 'application/json'
        },	   
 	   success: function(response) {
-	   		uploadRows();  
+	   		uploadRows();
+			getEmployeeList()  
 	   },
 	   error: function(response){
-	   		row.error=response.responseText
-	   		errorData.push(row);
-	   		uploadRows();
+		row.error=JSON.parse(response.responseText).message
+		errorData.push(row);
+		uploadRows();
+		getEmployeeList();
+
 	   }
 	});
 

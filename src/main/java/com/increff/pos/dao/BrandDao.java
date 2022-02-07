@@ -2,8 +2,6 @@ package com.increff.pos.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -20,16 +18,13 @@ public class BrandDao extends AbstractDao {
 	private static String select_all = "select b from BrandPojo b";
 	private static String select_brand_category = "select b from BrandPojo b where brand=:brand and category=:category";
 
-	@PersistenceContext
-	private EntityManager em; ///change to function em()
-
 	@Transactional
 	public void insert(BrandPojo b) {
-		em.persist(b);
+		em().persist(b);
 	}
 
 	public int delete(int id) {
-		Query query = em.createQuery(delete_id);
+		Query query = em().createQuery(delete_id);
 		query.setParameter("id", id);
 		return query.executeUpdate();
 	}

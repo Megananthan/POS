@@ -49,29 +49,5 @@ public class ReportApiContrller {
 	public List<OrderItemData> getOrderItem(@RequestBody ReportForm form) throws ApiException {
 		return(dto.getOrderItem(form));
 	}	
-	
-//	@ApiOperation(value = "Deletes a brand")
-//	@RequestMapping(path = "/api/brand/{id}", method = RequestMethod.DELETE)
-//	public void delete(@PathVariable int id) {
-//		dto.delete(id);
-//	}
-//
-//	@ApiOperation(value = "Gets a brand by ID")
-//	@RequestMapping(path = "/api/brand/{id}", method = RequestMethod.GET)
-//	public BrandData get(@PathVariable int id) throws ApiException {
-//		return(dto.get(id)); 
-//	}
-//
-//	@ApiOperation(value = "Gets list of all employees")
-//	@RequestMapping(path = "/api/brand", method = RequestMethod.GET)
-//	public List<BrandData> getAll() {
-//		return(dto.getAll());
-//	}
-//
-//	@ApiOperation(value = "Updates an employee")
-//	@RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)
-//	public void update(@PathVariable int id, @RequestBody BrandForm brandform) throws ApiException {
-//		dto.update(id, brandform);
-//	}
 
 }

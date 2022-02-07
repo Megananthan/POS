@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.xml.transform.TransformerException;
 
+import org.apache.fop.apps.FOPException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,10 @@ public class OrderItemDto {
 		Normalizer.normalize(f);
 		ProductPojo p=productservice.fetchProduct(f.getBarcode());
 		InventoryPojo i=inventoryservice.get(p.getId());
+		if(i==null)
+		{
+			throw new ApiException("Given product is not present in Inventory");
+		}
 		if(i.getQuantity()<f.getQuantity())
 		{
 			throw new ApiException("The given quantity of product is not present in inventory \n Invemtory quantity :"+i.getQuantity());
@@ -52,12 +58,12 @@ public class OrderItemDto {
 	}
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(List<ItemForm> f) throws ApiException, IOException {
+	public void add(List<ItemForm> f) throws ApiException, IOException, FOPException, TransformerException {
 		OrdersPojo p=Convertor.convert();
 		orderservice.add(p);
 		InventoryPojo inventory=new InventoryPojo();
-		ConvertorJavaToXML.jaxbObjectToXML(Convertor.convert(p.getId(),p.getTime(),f));
-		ConvertorJavaToXML.generatePDF();
+		PDFConvertor.jaxbObjectToXML(Convertor.convert(p.getId(),p.getTime(),f));
+		PDFConvertor.convertToPDF();
 		for(ItemForm i : f) {
 			Validate.isEmpty(i);
 			inventory.setId(i.getProductId());

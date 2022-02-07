@@ -21,7 +21,10 @@ function addBrand(event){
 	   success: function(response) {
 	   		getBrandList();  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		   var responseMessage=JSON.parse(response.responseText).message;
+		   errorDisplay('danger',responseMessage);
+	   }
 	});
 
 	return false;
@@ -47,7 +50,10 @@ function updateBrand(event){
 	   success: function(response) {
 	   		getBrandList();   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -62,7 +68,10 @@ function getBrandList(){
 	   success: function(data) {
 	   		displayBrandList(data);  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -75,7 +84,10 @@ function deleteBrand(id){
 	   success: function(data) {
 	   		getBrandList();  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -120,18 +132,20 @@ function uploadRows(){
        },	   
 	   success: function(response) {
 	   		uploadRows();
-			getBrandList()  
+			getBrandList();  
 	   },
 	   error: function(response){
-	   		row.error=response.responseText
+	   		row.error=JSON.parse(response.responseText).message
 	   		errorData.push(row);
 	   		uploadRows();
+			getBrandList();  
 	   }
 	});
 
 }
 
 function downloadErrors(){
+	console.log(errorData);
 	writeFileData(errorData);
 }
 
@@ -167,7 +181,10 @@ function displayEditBrand(id){
 	   success: function(data) {
 	   		displayBrand(data);   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});	
 }
 

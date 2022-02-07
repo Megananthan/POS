@@ -5,22 +5,6 @@ function getOrderItemUrl(){
 }
 
 
-function downloadInvoice(event){
-	var url = getOrderItemUrl()+"/download";
-	$.ajax({
-		url: url,
-		type: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		},	   
-		success: function(response) {
-				  
-		},
-		error: handleAjaxError
-	 });
-
-}
-
 //variable to store all order item
 var item=[];
 var dict={};
@@ -41,7 +25,8 @@ function addOrderItem(event){
 		var q=parseInt(JSON.parse(json).quantity);
 		if(item[i].inventory<item[i].quantity+q)
 		{
-			alert("Inventory has only "+item[i].inventory+" item for product: "+item[i].name);
+			var responseMessage="Inventory has only "+item[i].inventory+" item for product: "+item[i].name;
+		    errorDisplay('danger',responseMessage);
 		}
 		else{
 			item[i].quantity+=q;
@@ -64,7 +49,10 @@ function addOrderItem(event){
 					count++;
 					displayOrderItemList(item);  
 			},
-			error: handleAjaxError
+			error: function(response){
+				var responseMessage=JSON.parse(response.responseText).message;
+				errorDisplay('danger',responseMessage);
+			}
 		 });
 	}
 	return false;
@@ -77,18 +65,21 @@ function updateOrderItem(event){
 	var quantity= $("#orderitem-edit-form input[name=quantity]").val();
 	if(barcode=="")
 	{
-		alert("Barcode cannot be empty");
+		var responseMessage="Barcode cannot be empty";
+		errorDisplay('danger',responseMessage);
 		return false;
 	}
 	if(quantity<1){
-		alert("Quantity should be greater than 0");
+		var responseMessage="Quantity should be greater than 0";
+		errorDisplay('danger',responseMessage);
 		return false;
 	}
 	var n=dict[barcode];	
 	if(item[n].inventory<quantity)
 		{	
 			$('#edit-orderitem-modal').modal('toggle');
-			alert("Inventory has only "+item[n].inventory+" item for product: "+item[n].name);
+			var responseMessage="Inventory has only "+item[n].inventory+" item for product: "+item[n].name;
+		    errorDisplay('danger',responseMessage);
 		}
 		else{
 			item[n].quantity=quantity;
@@ -181,12 +172,10 @@ function cancelOrder(event){
 
 
 function submitOrder(event){
-	var url = getOrderItemUrl();
+	var url = getOrderItemUrl()+'/order';
 	console.log("inside suborderitem");
 	console.log(JSON.stringify(item));
-	var temp={};
-	temp["rety"]=item;
-	console.log(JSON.stringify(temp));
+	
 	item=JSON.stringify(item);
     
 	$.ajax({
@@ -197,16 +186,18 @@ function submitOrder(event){
 			'Content-Type': 'application/json'
 		},	   
 		success: function() {
-			alert('Order placed successfully');
-			$("#download-order").css("display","visible");
-			
+			var responseMessage="Order placed successfully";
+		    errorDisplay('success',responseMessage);
 			item=[];
 			dict={};
 			count=0;
 			displayOrderItemList(item);
 
 		},
-		error: handleAjaxError
+		error: function(response){
+			var responseMessage=JSON.parse(response.responseText).message;
+			errorDisplay('danger',responseMessage);
+		}
 	  });
 
 	  return false;
@@ -220,7 +211,7 @@ function init(){
 	$('#refresh-data').click(getOrderItemList);
 	$('#cancel-order').click(cancelOrder);
 	$('#submit-order').click(submitOrder);
-	$('#download-order').click(downloadInvoice);
+	// $('#download-order').click(downloadInvoice);
 
 	// if(item.length==0)
 	// {

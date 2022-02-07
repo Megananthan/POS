@@ -21,7 +21,10 @@ function addUser(event){
 	   success: function(response) {
 	   		getUserList();    
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -35,7 +38,10 @@ function getUserList(){
 	   success: function(data) {
 	   		displayUserList(data);   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -48,7 +54,10 @@ function deleteUser(id){
 	   success: function(data) {
 	   		getUserList();    
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 

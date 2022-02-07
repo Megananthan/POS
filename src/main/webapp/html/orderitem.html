@@ -69,7 +69,8 @@
 		<button type="button" class="btn btn-primary upload_btn" id="submit-order">Submit</button>
 		<br>
 		<br>
-		<button type="button" style="display:hidden;"  class="btn btn-primary edit_btn" id="download-order">Download Invoice</button>
+		<a type="button"   class="btn btn-primary edit_btn" th:href="@{/sample/Invoice.pdf}" target="_blank">Download Invoice</a> 
+		<!-- <button type="button" style="display:hidden;"  class="btn btn-primary edit_btn" id="download-order">Download Invoice</button> -->
 	</div>
 </div>
 

@@ -23,7 +23,31 @@ import com.increff.pos.model.OrderDetail;
 
 public class PDFConvertor
 {
-	
+	 public static void jaxbObjectToXML(OrderDetail d) 
+	    {
+	        try
+	        {
+	            //Create JAXB Context
+	            JAXBContext jaxbContext = JAXBContext.newInstance(OrderDetail.class);
+	             
+	            //Create Marshaller
+	            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+	 
+	            //Required formatting??
+	            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+	 
+	           //Store XML to File
+	            File file = new File("src\\main\\resources\\com\\increff\\pos\\orderitem.xml");
+	             
+	            //Writes XML file to file-system
+	            jaxbMarshaller.marshal(d, file); 
+	        } 
+	        catch (JAXBException e) 
+	        {
+	            e.printStackTrace();
+	        }
+	    }
+	 
 	 public static void convertToPDF()  throws IOException, FOPException, TransformerException {
 	        // the XSL FO file
 	        File xsltFile = new File("src\\\\main\\\\resources\\\\com\\\\increff\\\\pos\\\\orderitem.xsl");
@@ -57,28 +81,5 @@ public class PDFConvertor
 	        
 	    }
 	
-    public static void jaxbObjectToXML(OrderDetail d) 
-    {
-        try
-        {
-            //Create JAXB Context
-            JAXBContext jaxbContext = JAXBContext.newInstance(OrderDetail.class);
-             
-            //Create Marshaller
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
- 
-            //Required formatting??
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
- 
-           //Store XML to File
-            File file = new File("src\\main\\resources\\com\\increff\\pos\\orderitem.xml");
-             
-            //Writes XML file to file-system
-            jaxbMarshaller.marshal(d, file); 
-        } 
-        catch (JAXBException e) 
-        {
-            e.printStackTrace();
-        }
-    }
+   
 }

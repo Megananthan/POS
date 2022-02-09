@@ -11,7 +11,6 @@ function isEmpty(json){
 	datas["name"]=JSON.parse(json)["name"];
 	datas["mrp"]=JSON.parse(json)["mrp"];
 	if(JSON.parse(json)["brand"]==null){
-		console.log("in brand");
 		datas["brand"]="";
 	}
 	else{
@@ -199,8 +198,6 @@ function displayBrandList(data){
 
 
 function getCategoryList(brand,change){
-	
-	console.log(brand);
 	var url = $("meta[name=baseUrl]").attr("content")+"/api/category/"+brand;
 	$.ajax({
 	   url: url,
@@ -325,7 +322,6 @@ $(document).ready(getProductList);
 $(document).ready(getBrandList);
 $("#inputBrand").change(function() {
 	var brand = $(this).val(); // get selected options value.
-	console.log("brand "+brand);
 	getCategoryList(brand,"#inputCategory");    
 });
 $("#inputEditBrand").change(function() {

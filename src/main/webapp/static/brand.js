@@ -210,9 +210,7 @@ function updateUploadDialog(){
 function updateFileName(){
 	var $file = $('#brandFile');
 	var fileName = $file.val();
-	// console.log(fileName)
 	fileName=fileName.replace("C:\\fakepath\\", "");
-	// console.log(fileName)
 	$('#brandFileName').html(fileName);
 }
 
@@ -221,7 +219,6 @@ function displayUploadData(){
  	resetUploadDialog(); 
 	getBrandList();	
 	$('#upload-brand-modal').modal('toggle');
-	// getBrandList();
 }
 
 function displayBrand(data){

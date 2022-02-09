@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.increff.pos.pojo.UserPojo;
 
@@ -24,29 +25,34 @@ public class UserDao extends AbstractDao {
 		em().persist(p);
 	}
 
+	@Transactional
 	public int delete(int id) {
 		Query query = em().createQuery(delete_id);
 		query.setParameter("id", id);
 		return query.executeUpdate();
 	}
 
+	@Transactional(readOnly = true)
 	public UserPojo select(int id) {
 		TypedQuery<UserPojo> query = getQuery(select_id, UserPojo.class);
 		query.setParameter("id", id);
 		return getSingle(query);
 	}
 
+	@Transactional(readOnly = true)
 	public UserPojo select(String email) {
 		TypedQuery<UserPojo> query = getQuery(select_email, UserPojo.class);
 		query.setParameter("email", email);
 		return getSingle(query);
 	}
 
+	@Transactional(readOnly = true)
 	public List<UserPojo> selectAll() {
 		TypedQuery<UserPojo> query = getQuery(select_all, UserPojo.class);
 		return query.getResultList();
 	}
 
+	@Transactional
 	public void update(UserPojo p) {
 	}
 

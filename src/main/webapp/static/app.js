@@ -12,7 +12,6 @@ function toJson($form){
 }
 
 function errorDisplay(template,message){
-    console.log(message);
     var $errorbar=$('#status-bar');
     var text='Success! ';
     if(template=='danger'){
@@ -29,8 +28,6 @@ function errorDisplay(template,message){
 function handleAjaxError(response){
 	var response = JSON.parse(response.responseText);
 	alert(response.message);
-    // $(".error").html(response.message);
-    // $(".error").css("display","");
 }
 
 function readFileData(file, callback){

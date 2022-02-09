@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.increff.pos.pojo.ProductPojo;
 
@@ -25,41 +26,48 @@ public class ProductDao extends AbstractDao {
 		em().persist(p);
 	}
 
+	@Transactional
 	public int delete(int id) {
 		Query query = em().createQuery(delete_id);
 		query.setParameter("id", id);
 		return query.executeUpdate();
 	}
-
+	
+	@Transactional(readOnly = true)
 	public ProductPojo select(int id) {
 		TypedQuery<ProductPojo> query = getQuery(select_id, ProductPojo.class);
 		query.setParameter("id", id);
 		return getSingle(query);
 	}
 
+	@Transactional(readOnly = true)
 	public List<ProductPojo> selectAll() {
 		TypedQuery<ProductPojo> query = getQuery(select_all, ProductPojo.class);
 		return query.getResultList();
 	}
 	
+	@Transactional(readOnly = true)
 	public ProductPojo selectBarcode(String barcode) {
 		TypedQuery<ProductPojo> query = getQuery(select_barcode, ProductPojo.class);
 		query.setParameter("barcode", barcode);
 		return getSingle(query);
 	}
 	
+	@Transactional(readOnly = true)
 	public ProductPojo selectName(String name) {
 		TypedQuery<ProductPojo> query = getQuery(select_name, ProductPojo.class);
 		query.setParameter("name", name);
 		return getSingle(query);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<ProductPojo> selectWithBrandID(int id) {
 		TypedQuery<ProductPojo> query = getQuery(select_brand_category, ProductPojo.class);
 		query.setParameter("brand_category", id);
 		return query.getResultList();
 	}
 	
+	@Transactional
 	public void update(ProductPojo p) {
 	}
 

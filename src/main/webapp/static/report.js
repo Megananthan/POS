@@ -32,8 +32,6 @@ function displayBrandList(data){
 }
 
 function getCategoryList(brand){
-	
-	console.log(brand);
 	var url = $("meta[name=baseUrl]").attr("content")+"/api/category/"+brand;
 	$.ajax({
 	   url: url,
@@ -65,8 +63,6 @@ function getOrderItemList(){
 	var $form = $("#report-form");
 	var input={}
 	var json = toJson($form);
-	console.log("json:");
-	console.log(JSON.parse(json));
 	input["startDate"]=JSON.parse(json).startDate+" 00:00:00";
 	input["endDate"]=JSON.parse(json).endDate+" 23:59:59";
 	if(JSON.parse(json)["brand"]==null)
@@ -85,8 +81,6 @@ function getOrderItemList(){
 	}
 	pass=input;
 	input=JSON.stringify(input)
-	console.log("input:");
-    console.log(input);
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -111,14 +105,11 @@ function getOrderItemList(){
 
 function getBrand(){
 	var url = getBrandUrl() + "/brand";
-	// console.log("inside brand");
-
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
 		downloadBrand(data);
-		console.log(data);
 	   },
 	   error: function(response){
 		var responseMessage=JSON.parse(response.responseText).message;
@@ -129,14 +120,11 @@ function getBrand(){
 
 function getProduct(){
 	var url = getBrandUrl() + "/product";
-	// console.log("inside product");
-
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
-		downloadProduct(data);
-		console.log(data);	   		  
+		downloadProduct(data);	  
 	   },
 	   error: function(response){
 		var responseMessage=JSON.parse(response.responseText).message;
@@ -147,13 +135,10 @@ function getProduct(){
 
 function getInventory(){
 	var url = getBrandUrl() + "/inventory";
-	// console.log("inside inventory");
-
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
-	   		console.log(data);
 			downloadInventory(data);
 	   },
 	   error: function(response){
@@ -245,15 +230,9 @@ function displayItemList(data,input){
 	$thead.append(head);
 	$("#norecord").css("display","visible");
 	var check={}
-	console.log(input["brand"]);
-	console.log(input["category"]);
-	console.log(JSON.stringify(data));
-
-
 	if(input["brand"]!="%" && input["category"]!="%")
 	{	
 		$(".product_col").css("display","visible");
-		console.log("inside brand cat");
 		for(var i in data){
 			var e = data[i];
 			if(e.brand==input["brand"] && e.category==input["category"] )
@@ -268,9 +247,6 @@ function displayItemList(data,input){
 			}
 		}
 		if(Object.keys(check).length!=0){
-			console.log("not empty");
-			console.log(check);
-			console.log(Object.keys(check).length);
 			$("#norecord").css("display","none");
 		}
 		for(var i in check){
@@ -291,7 +267,6 @@ function displayItemList(data,input){
 	else if(input["brand"]=="%" && input["category"]!="%")
 	{
 		$(".brand_col").css("display","visible");
-		console.log("inside brand");
 		for(var i in data){
 			var e = data[i];
 			if(e.category==input["category"])
@@ -388,7 +363,6 @@ function displayItemList(data,input){
 		
 	}
 	if(Object.keys(check).length==0){
-		console.log("empty");
 		$("#norecord").css("display","visible");
 	}
 
@@ -409,7 +383,6 @@ $(document).ready(init);
 $(document).ready(getBrandList);
 $("#brandName").change(function() {
 	var brand = $(this).val(); // get selected options value.
-	console.log("brand "+brand);
 	getCategoryList(brand);    
 });
 

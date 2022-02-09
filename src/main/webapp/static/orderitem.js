@@ -16,10 +16,7 @@ function addOrderItem(event){
 	var json = toJson($form);
 	
 	var url = getOrderItemUrl()+"/check";
-	//console.log("barcode "+JSON.parse(json).barcode);
 	var i=dict[JSON.parse(json).barcode];
-	console.log("item "+JSON.stringify(item));
-	console.log("dict "+JSON.stringify(dict));
 	if(i!=null)
 	{
 		var q=parseInt(JSON.parse(json).quantity);
@@ -32,8 +29,6 @@ function addOrderItem(event){
 			item[i].quantity+=q;
 			displayOrderItemList(item);
 		}
-		
-		//console.log("Inside if");
 	}
 	else{
 		$.ajax({
@@ -104,10 +99,6 @@ function deleteOrderItem(n){
     	temp[item[i].barcode]=i;
 	}
 	dict=temp;
-	console.log("Delete ----");
-	console.log("item "+JSON.stringify(item));
-	console.log("dict "+JSON.stringify(dict));
-	console.log("       ----");
 	displayOrderItemList(item);
 }
 
@@ -122,8 +113,7 @@ function displayOrderItemList(data){
 	for(var i in data){
 		var e = data[i];
 		var number=dict[e.barcode];
-		amt+=(e.mrp*e.quantity)
-		// console.log("list "+number);
+		amt+=(e.mrp*e.quantity);
 		var buttonHtml = '<button class="btn btn-primary delete_btn" onclick="deleteOrderItem('+number+')">delete</button>'
 		buttonHtml += ' <button class="btn btn-primary edit_btn" onclick="displayEditOrderItem('+number+')">edit</button>'
 		var row = '<tr>'
@@ -159,7 +149,6 @@ function displayEditOrderItem(n){
 function displayOrderItem(data){
 	$("#orderitem-edit-form input[name=quantity]").val(data.quantity);	
 	$("#orderitem-edit-form input[name=barcode]").val(data.barcode);	
-	// $("#orderitem-edit-form input[name=id]").val(data.id);	
 	$('#edit-orderitem-modal').modal('toggle');
 }
 
@@ -172,10 +161,7 @@ function cancelOrder(event){
 
 
 function submitOrder(event){
-	var url = getOrderItemUrl()+'/order';
-	console.log("inside suborderitem");
-	console.log(JSON.stringify(item));
-	
+	var url = getOrderItemUrl()+'/order';	
 	item=JSON.stringify(item);
     
 	$.ajax({
@@ -211,18 +197,6 @@ function init(){
 	$('#refresh-data').click(getOrderItemList);
 	$('#cancel-order').click(cancelOrder);
 	$('#submit-order').click(submitOrder);
-	// $('#download-order').click(downloadInvoice);
-
-	// if(item.length==0)
-	// {
-	// 	$('#cancel-order').prop('disabled',true);
-	// 	$('#submit-order').prop('disabled',true);
-	// }
-	// else if(item.length!=0){
-	// 	$('#cancel-order').prop('disabled',false);
-	// 	$('#submit-order').prop('disabled',false);
-	// }
-
 }
 
 $(document).ready(init);

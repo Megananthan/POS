@@ -60,7 +60,7 @@ public class BrandDao extends AbstractDao {
 		return getSingle(query);
 	}
 
-	
+	@Transactional
 	public void update(BrandPojo b) {
 	}
 	

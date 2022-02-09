@@ -2,9 +2,10 @@ package com.increff.pos.dao;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.increff.pos.pojo.OrdersPojo;
 
@@ -21,18 +22,21 @@ public class OrdersDao extends AbstractDao {
 		em().persist(p);
 	}
 
+	@Transactional
 	public int delete(int id) {
 		Query query = em().createQuery(delete_id);
 		query.setParameter("id", id);
 		return query.executeUpdate();
 	}
 
+	@Transactional(readOnly = true)
 	public OrdersPojo select(int id) {
 		TypedQuery<OrdersPojo> query = getQuery(select_id, OrdersPojo.class);
 		query.setParameter("id", id);
 		return getSingle(query);
 	}
 	
+	@Transactional(readOnly = true)
 	public OrdersPojo selectTime(String time) {
 		TypedQuery<OrdersPojo> query = getQuery(select_time, OrdersPojo.class);
 		query.setParameter("time", time);

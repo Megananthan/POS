@@ -89,9 +89,7 @@ function uploadRows(){
 	row1.quantity=row.quantity
 	var json = JSON.stringify(row1);
 	var url = getInventoryUrl();
-
-	console.log(json);
-
+	
 	//Make ajax call
 	$.ajax({
 	   url: url,

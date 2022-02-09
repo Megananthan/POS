@@ -50,5 +50,4 @@ public class ReportApiContrller {
 	public List<OrderItemData> getOrderItem(@RequestBody ReportForm form) throws ApiException, ParseException {
 		return(dto.getOrderItem(form));
 	}	
-
 }

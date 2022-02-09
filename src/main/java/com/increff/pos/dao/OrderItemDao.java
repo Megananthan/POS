@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.increff.pos.pojo.OrderItemPojo;
 
@@ -23,23 +24,27 @@ public class OrderItemDao extends AbstractDao {
 		em().persist(p);
 	}
 
+	@Transactional
 	public int delete(int id) {
 		Query query = em().createQuery(delete_id);
 		query.setParameter("id", id);
 		return query.executeUpdate();
 	}
 
+	@Transactional(readOnly = true)
 	public OrderItemPojo select(int id) {
 		TypedQuery<OrderItemPojo> query = getQuery(select_id, OrderItemPojo.class);
 		query.setParameter("id", id);
 		return getSingle(query);
 	}
 
+	@Transactional(readOnly = true)
 	public List<OrderItemPojo> selectAll() {
 		TypedQuery<OrderItemPojo> query = getQuery(select_all, OrderItemPojo.class);
 		return query.getResultList();
 	}
 	
+	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<Integer> selectWithRange(String start,String end,String brand,String category) {
 		

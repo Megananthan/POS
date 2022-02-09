@@ -14,13 +14,45 @@
 
  <!-- Top row with form-->
 <div class="row">
-	 <div class="col-2">
-	 	<a th:href="@{/ui/employee}" title="Employees"> <i class="fas fa-users"></i> </a>
-	 </div>	
-	 <div class="col-2">
-	 	<a th:href="@{/ui/admin}" title="Admin"> <i class="fas fa-cog"></i> </a>
-	 </div>	
+	 <div class="col-4 space">
+		<a th:href="@{/ui/admin}" title="Admin">
+		<div class="box"><i class="fas fa-users-cog icon"></i></div>
+		</a>
+	 </div>
+	 <div class="col-4 space">
+		<a th:href="@{/ui/brand}" title="Brand">
+		<div class="box"><i class="fas fa-bold icon"></i></div>
+		</a>
+	</div>	
+	<div class="col-4 space">
+		<a th:href="@{/ui/product}" title="Product">
+		<div class="box"><i class="fas fa-barcode icon"></i></div>
+		</a>
+	</div>
 </div> 
+<div class="row">
+	<div class="col-4 space">
+		<a th:href="@{/ui/inventory}" title="Inventory">
+		<div class="box">
+			<i class="fas fa-store icon"></i>
+		</div>
+		</a>
+	</div>
+	<div class="col-4 space">
+		<a th:href="@{/ui/order}" title="Order">
+		<div class="box">
+		<i class="fas fa-shopping-cart icon"></i>
+		</div>
+		</a>
+	</div>
+	<div class="col-4 space">
+		<a th:href="@{/ui/report}" title="Report">
+		<div class="box">
+		<i class="fas fa-chart-pie icon"></i>
+		</div>
+		</a>
+	</div>
+</div>
 
 
 

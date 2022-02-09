@@ -25,7 +25,10 @@ function updateInventory(event){
 	   success: function(response) {
 	   		getInventoryList();   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -40,7 +43,10 @@ function getInventoryList(){
 	   success: function(data) {
 	   		displayInventoryList(data);  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -99,9 +105,10 @@ function uploadRows(){
 			getInventoryList();  
 	   },
 	   error: function(response){
-	   		row.error=response.responseText
-	   		errorData.push(row);
-	   		uploadRows();
+		row.error=JSON.parse(response.responseText).message
+		errorData.push(row);
+		uploadRows();
+		getInventoryList();
 	   }
 	});
 }
@@ -115,16 +122,19 @@ function downloadErrors(){
 function displayInventoryList(data){
 	var $tbody = $('#inventory-table').find('tbody');
 	$tbody.empty();
+	var c=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml =' <button onclick="displayEditInventory(' + e.id + ')">edit</button>';
+		var buttonHtml =' <button class="btn btn-primary edit_btn" onclick="displayEditInventory(' + e.id + ')">edit</button>';
 		var row = '<tr>'
-		+ '<td>' + e.id + '</td>'
+		+ '<td class="coloumn">' + e.id + '</td>'
+		+ '<td>' + c + '</td>'
 		+ '<td>' + e.name + '</td>'
 		+ '<td>'  + e.quantity + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+		c++;
 	}
 }
 
@@ -136,7 +146,10 @@ function displayEditInventory(id){
 	   success: function(data) {
 	   		displayInventory(data);   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});	
 }
 
@@ -162,6 +175,7 @@ function updateUploadDialog(){
 function updateFileName(){
 	var $file = $('#inventoryFile');
 	var fileName = $file.val();
+	fileName=fileName.replace("C:\\fakepath\\", "");
 	$('#inventoryFileName').html(fileName);
 }
 

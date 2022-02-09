@@ -4,13 +4,35 @@ function getProductUrl(){
 	return baseUrl + "/api/product";
 }
 
+function isEmpty(json){
+
+	var datas={};
+	datas["barcode"]=JSON.parse(json)["barcode"];
+	datas["name"]=JSON.parse(json)["name"];
+	datas["mrp"]=JSON.parse(json)["mrp"];
+	if(JSON.parse(json)["brand"]==null){
+		console.log("in brand");
+		datas["brand"]="";
+	}
+	else{
+		datas["brand"]=JSON.parse(json)["brand"]
+	}
+	if(JSON.parse(json)["category"]==null){
+		datas["category"]="";
+	}
+	else{
+		datas["category"]=JSON.parse(json)["category"];
+	}
+	return(JSON.stringify(datas));
+}
+
 //BUTTON ACTIONS
 function addProduct(event){
 	//Set the values to update
 	var $form = $("#product-form");
 	var json = toJson($form);
 	var url = getProductUrl();
-
+	json=isEmpty(json);
 	$.ajax({
 	   url: url,
 	   type: 'POST',
@@ -21,7 +43,10 @@ function addProduct(event){
 	   success: function(response) {
 	   		getProductList();  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -36,7 +61,7 @@ function updateProduct(event){
 	//Set the values to update
 	var $form = $("#product-edit-form");
 	var json = toJson($form);
-
+	json=isEmpty(json);
 	$.ajax({
 	   url: url,
 	   type: 'PUT',
@@ -47,7 +72,10 @@ function updateProduct(event){
 	   success: function(response) {
 	   		getProductList();   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -62,7 +90,10 @@ function getProductList(){
 	   success: function(data) {
 	   		displayProductList(data);  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -75,7 +106,10 @@ function deleteProduct(id){
 	   success: function(data) {
 	   		getProductList();  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -120,11 +154,13 @@ function uploadRows(){
        },	   
 	   success: function(response) {
 	   		uploadRows();  
+			getProductList();
 	   },
 	   error: function(response){
-	   		row.error=response.responseText
-	   		errorData.push(row);
-	   		uploadRows();
+		row.error=JSON.parse(response.responseText).message
+		errorData.push(row);
+		uploadRows();
+		getProductList();
 	   }
 	});
 
@@ -134,17 +170,76 @@ function downloadErrors(){
 	writeFileData(errorData);
 }
 
+function getBrandList(){
+	var url = $("meta[name=baseUrl]").attr("content")+"/api/brand";
+	$.ajax({
+	   url: url,
+	   type: 'GET',
+	   success: function(data) {
+	   		displayBrandList(data);  
+	   },
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
+	});
+}
+function displayBrandList(data){
+	var $dropdown=$(".brands")
+	$dropdown.empty()
+	var row='<option selected="true" disabled="disabled" value="select">--Select--</option>';
+	$dropdown.append(row);
+	for(var i in data){
+		var e=data[i];
+		var row='<option value='+e.brand+'>'+e.brand+'</option>';
+		$dropdown.append(row);
+	}
+}
+
+
+
+function getCategoryList(brand,change){
+	
+	console.log(brand);
+	var url = $("meta[name=baseUrl]").attr("content")+"/api/category/"+brand;
+	$.ajax({
+	   url: url,
+	   type: 'GET',
+	   success: function(data) {
+	   		displayCategoryList(data,change);  
+	   },
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
+	});
+}
+function displayCategoryList(data,change){
+	var $dropdown=$(change);
+	$dropdown.empty();
+	var row='<option selected="true" disabled="disabled" value="select">--Select--</option>';
+	$dropdown.append(row);
+	for(var i in data){
+		var e=data[i];
+		var row='<option value='+e.category+'>'+e.category+'</option>';
+		$dropdown.append(row);
+	}
+}
+
+
 //UI DISPLAY METHODS
 
 function displayProductList(data){
 	var $tbody = $('#product-table').find('tbody');
 	$tbody.empty();
+	var c=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteProduct(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditProduct(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button class="btn btn-primary delete_btn" onclick="deleteProduct(' + e.id + ')">delete</button>'
+		buttonHtml += ' <button class="btn btn-primary edit_btn" onclick="displayEditProduct(' + e.id + ')">edit</button>'
 		var row = '<tr>'
-		+ '<td>' + e.id + '</td>'
+		+ '<td class="coloumn">' + e.id + '</td>'
+		+ '<td>' + c + '</td>'
 		+ '<td>' + e.barcode + '</td>'
 		+ '<td>' + e.brand + '</td>'
 		+ '<td>' + e.category + '</td>'
@@ -153,6 +248,7 @@ function displayProductList(data){
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+		c++;
 	}
 }
 
@@ -164,7 +260,10 @@ function displayEditProduct(id){
 	   success: function(data) {
 	   		displayProduct(data);   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});	
 }
 
@@ -190,6 +289,7 @@ function updateUploadDialog(){
 function updateFileName(){
 	var $file = $('#productFile');
 	var fileName = $file.val();
+	fileName=fileName.replace("C:\\fakepath\\", "");
 	$('#productFileName').html(fileName);
 }
 
@@ -222,4 +322,14 @@ function init(){
 
 $(document).ready(init);
 $(document).ready(getProductList);
+$(document).ready(getBrandList);
+$("#inputBrand").change(function() {
+	var brand = $(this).val(); // get selected options value.
+	console.log("brand "+brand);
+	getCategoryList(brand,"#inputCategory");    
+});
+$("#inputEditBrand").change(function() {
+	var brand = $(this).val(); // get selected options value.
+	getCategoryList(brand,"#inputEditCategory");    
+});
 

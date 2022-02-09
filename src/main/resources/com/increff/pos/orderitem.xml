@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<orderDetail>
+    <time>09-02-2022 22:14:18</time>
+    <item>
+        <barcode>a123</barcode>
+        <inventory>30</inventory>
+        <mrp>12.0</mrp>
+        <name>bisc</name>
+        <productId>69</productId>
+        <quantity>13</quantity>
+    </item>
+    <item>
+        <barcode>a1234</barcode>
+        <inventory>100</inventory>
+        <mrp>15.0</mrp>
+        <name>bru</name>
+        <productId>70</productId>
+        <quantity>4</quantity>
+    </item>
+    <orderId>3802</orderId>
+    <total>216.0</total>
+</orderDetail>

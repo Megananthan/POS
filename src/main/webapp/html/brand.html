@@ -17,7 +17,7 @@
 	 <div class="col-12">
 			<form class="form-inline" id="brand-form">
 			  <div class="form-group">
-			    <label for="brandName" class="col-sm-2 col-form-label">Brand Name</label>
+			    <label for="brandName" class="col-sm-2 col-form-label">Name</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" name="brand" id="brandName" placeholder="enter brand name" required>
 			    </div>
@@ -28,11 +28,9 @@
 			      <input type="text" class="form-control" name="category" id="brandCategory" placeholder="enter category" required>
 			    </div>
 			  </div>
-			  <button type="button" class="btn btn-primary" id="add-brand">Add</button>
+			  <button type="button" class="btn btn-primary add_btn" id="add-brand">Add</button>
 			  &nbsp;
-			  <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
-			  &nbsp;
-			  <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
+			  <button type="button" class="btn btn-primary upload_btn" id="upload-data">Upload</button>
 			</form>
 	 </div>	
 </div> 
@@ -47,33 +45,17 @@
  <!-- Table -->
  <div class="col-12">
 	<table class="table table-striped" id="brand-table">
-	  <thead>
+	  <thead class="thead-dark">
 	    <tr>
-	      <th scope="col">ID</th>
+	      <th class="coloumn" scope="col">ID</th>
+		  <th scope="col">S.No</th>
 	      <th scope="col">Brand Name</th>
 	      <th scope="col">Category</th>
 	      <th scope="col">Actions</th>
 	    </tr>
 	  </thead>
 	  <tbody>
-	    <tr>
-	      <td>1</td>
-	      <td>Romil Jain</td>
-	      <td>30</td>
-	      <td>Edit | Delete</td>
-	    </tr>
-	    <tr>
-	      <td>2</td>
-	      <td>Rajul Jain</td>
-	      <td>31</td>
-	      <td>Edit | Delete</td>
-	    </tr>
-	    <tr>
-	      <td>3</td>
-	      <td>Anaisha Jain</td>
-	      <td>7</td>
-	      <td>Edit | Delete</td>
-	    </tr>
+	   
 	  </tbody>
 	</table>
 
@@ -85,7 +67,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit brand</h5>
+        <h5 class="modal-title">Edit Brand</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -98,6 +80,9 @@
 			      <input type="text" class="form-control" name="brand" placeholder="enter brand" required>
 			    </div>
 			  </div>
+			  <br>
+			  <br>
+			  <br>
 			  <div class="form-group">
 			    <label for="inputBrandCategory" class="col-sm-2 col-form-label">Category</label>
 			    <div class="col-sm-10">
@@ -109,7 +94,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="update-brand">Update</button>
+        <button type="button" class="btn btn-primary upload_btn" id="update-brand">Update</button>
       </div>
     </div>
   </div>
@@ -142,7 +127,7 @@
       
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="process-data">Upload</button>
+        <button type="button" class="btn btn-primary upload_btn" id="process-data">Upload</button>
         <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>
       </div>
     </div>

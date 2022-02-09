@@ -21,7 +21,10 @@ function addBrand(event){
 	   success: function(response) {
 	   		getBrandList();  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		   var responseMessage=JSON.parse(response.responseText).message;
+		   errorDisplay('danger',responseMessage);
+	   }
 	});
 
 	return false;
@@ -47,7 +50,10 @@ function updateBrand(event){
 	   success: function(response) {
 	   		getBrandList();   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 
 	return false;
@@ -62,7 +68,10 @@ function getBrandList(){
 	   success: function(data) {
 	   		displayBrandList(data);  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -75,7 +84,10 @@ function deleteBrand(id){
 	   success: function(data) {
 	   		getBrandList();  
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});
 }
 
@@ -105,6 +117,7 @@ function uploadRows(){
 	
 	//Process next row
 	var row = fileData[processCount];
+	
 	processCount++;
 	
 	var json = JSON.stringify(row);
@@ -119,12 +132,14 @@ function uploadRows(){
        	'Content-Type': 'application/json'
        },	   
 	   success: function(response) {
-	   		uploadRows();  
+	   		uploadRows();
+			getBrandList();  
 	   },
 	   error: function(response){
-	   		row.error=response.responseText
+	   		row.error=JSON.parse(response.responseText).message
 	   		errorData.push(row);
 	   		uploadRows();
+			getBrandList();  
 	   }
 	});
 
@@ -139,18 +154,23 @@ function downloadErrors(){
 function displayBrandList(data){
 	var $tbody = $('#brand-table').find('tbody');
 	$tbody.empty();
+	var c=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteBrand(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditBrand(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button class="btn btn-primary delete_btn" onclick="deleteBrand(' + e.id + ')">delete</button>'
+		buttonHtml += ' <button class="btn btn-primary edit_btn" onclick="displayEditBrand(' + e.id + ')">edit</button>'
 		var row = '<tr>'
-		+ '<td>' + e.id + '</td>'
+		+ '<td class="coloumn">' + e.id + '</td>'
+		+ '<td>' + c + '</td>'
 		+ '<td>' + e.brand + '</td>'
 		+ '<td>'  + e.category + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
+		c++;
 	}
+
+
 }
 
 function displayEditBrand(id){
@@ -161,7 +181,10 @@ function displayEditBrand(id){
 	   success: function(data) {
 	   		displayBrand(data);   
 	   },
-	   error: handleAjaxError
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
 	});	
 }
 
@@ -187,12 +210,18 @@ function updateUploadDialog(){
 function updateFileName(){
 	var $file = $('#brandFile');
 	var fileName = $file.val();
+	// console.log(fileName)
+	fileName=fileName.replace("C:\\fakepath\\", "");
+	// console.log(fileName)
 	$('#brandFileName').html(fileName);
 }
 
 function displayUploadData(){
- 	resetUploadDialog(); 	
+	getBrandList();	
+ 	resetUploadDialog(); 
+	getBrandList();	
 	$('#upload-brand-modal').modal('toggle');
+	// getBrandList();
 }
 
 function displayBrand(data){

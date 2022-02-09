@@ -17,6 +17,9 @@ body {
 	background-color: #f5f5f5;
 }
 
+.error{
+	display: none;
+}
 
 .fas{
     font-size: 4rem;

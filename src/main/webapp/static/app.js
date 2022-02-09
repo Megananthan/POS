@@ -11,10 +11,26 @@ function toJson($form){
     return json;
 }
 
+function errorDisplay(template,message){
+    console.log(message);
+    var $errorbar=$('#status-bar');
+    var text='Success! ';
+    if(template=='danger'){
+        text='Failed! ';
+    }
+    $errorbar.empty();
+    var str='<div class="alert alert-'+template + ' alert-dismissable">'+
+        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+
+        '<strong>'+ text + '</strong>' + message +
+        '</div>';
+    $errorbar.append(str);
+}
 
 function handleAjaxError(response){
 	var response = JSON.parse(response.responseText);
 	alert(response.message);
+    // $(".error").html(response.message);
+    // $(".error").css("display","");
 }
 
 function readFileData(file, callback){
@@ -42,13 +58,13 @@ function writeFileData(arr){
     var fileUrl =  null;
 
     if (navigator.msSaveBlob) {
-        fileUrl = navigator.msSaveBlob(blob, 'download.tsv');
+        fileUrl = navigator.msSaveBlob(blob, 'download_error.tsv');
     } else {
         fileUrl = window.URL.createObjectURL(blob);
     }
     var tempLink = document.createElement('a');
     tempLink.href = fileUrl;
-    tempLink.setAttribute('download', 'download.tsv');
+    tempLink.setAttribute('download', 'download_error.tsv');
     tempLink.click(); 
 }
 

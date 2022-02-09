@@ -175,6 +175,7 @@ function updateUploadDialog(){
 function updateFileName(){
 	var $file = $('#inventoryFile');
 	var fileName = $file.val();
+	fileName=fileName.replace("C:\\fakepath\\", "");
 	$('#inventoryFileName').html(fileName);
 }
 

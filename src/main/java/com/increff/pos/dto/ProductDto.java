@@ -34,10 +34,10 @@ public class ProductDto {
 	
 	@Transactional(rollbackOn = ApiException.class)
 	public void add(ProductForm f) throws ApiException {
+		Normalizer.normalize(f);
 		Validate.isEmpty(f);
 		BrandPojo b=fetchBrand(f);
 		ProductPojo p=Convertor.convert(f,b.getId());
-		Normalizer.normalize(p);
 		productservice.add(p);		
 	}
 	
@@ -62,10 +62,10 @@ public class ProductDto {
 	
 	@Transactional(rollbackOn = ApiException.class)
 	public void update(int id,ProductForm f) throws ApiException {
+		Normalizer.normalize(f);
 		Validate.isEmpty(f);
 		BrandPojo b=fetchBrand(f);
 		ProductPojo p=Convertor.convert(f,b.getId());
-		Normalizer.normalize(p);
 		productservice.update(id,p);
 	}
 	

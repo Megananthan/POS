@@ -31,9 +31,9 @@ public class BrandDto {
 	private InventoryService inventoryservice;
 	
 	public void add(BrandForm brandform) throws ApiException {
+		Normalizer.normalize(brandform);
 		Validate.isEmpty(brandform);
 		BrandPojo b=Convertor.convert(brandform);
-		Normalizer.normalize(b);
 		brandservice.add(b);
 	}
 	
@@ -61,10 +61,19 @@ public class BrandDto {
 		return listdata;
 	}
 	
+	public List<BrandData> getAllCategory(String brand) {
+		List<BrandPojo> listpojo = brandservice.getAllCategory(brand);
+		List<BrandData> listdata = new ArrayList<BrandData>();
+		for (BrandPojo p : listpojo) {
+			listdata.add(Convertor.convert(p));
+		}
+		return listdata;
+	}
+	
 	public void update(int id,BrandForm f) throws ApiException {
+		Normalizer.normalize(f);
 		Validate.isEmpty(f);
 		BrandPojo b = Convertor.convert(f);
-		Normalizer.normalize(b);
 		brandservice.update(id, b);
 	}
 }

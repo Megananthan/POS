@@ -47,6 +47,12 @@ public class BrandApiContrller {
 	public List<BrandData> getAll() {
 		return(dto.getAll());
 	}
+	
+	@ApiOperation(value = "Gets list of all Category")
+	@RequestMapping(path = "/api/category/{brand}", method = RequestMethod.GET)
+	public List<BrandData> getAllCategory(@PathVariable String brand) {
+		return(dto.getAllCategory(brand));
+	}
 
 	@ApiOperation(value = "Updates an brand")
 	@RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)

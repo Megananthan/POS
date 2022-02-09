@@ -117,6 +117,7 @@ function uploadRows(){
 	
 	//Process next row
 	var row = fileData[processCount];
+	
 	processCount++;
 	
 	var json = JSON.stringify(row);
@@ -145,7 +146,6 @@ function uploadRows(){
 }
 
 function downloadErrors(){
-	console.log(errorData);
 	writeFileData(errorData);
 }
 
@@ -210,6 +210,9 @@ function updateUploadDialog(){
 function updateFileName(){
 	var $file = $('#brandFile');
 	var fileName = $file.val();
+	// console.log(fileName)
+	fileName=fileName.replace("C:\\fakepath\\", "");
+	// console.log(fileName)
 	$('#brandFileName').html(fileName);
 }
 

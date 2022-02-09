@@ -208,12 +208,13 @@
 
 	<build>
 		<plugins>
-			<!-- Jetty plugin, for web application testing -->
+			
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
 				<configuration>
+					<reload>manual</reload>
 					<scanIntervalSeconds>5</scanIntervalSeconds>
 					<useTestClasspath>false</useTestClasspath>
 					<systemProperties>

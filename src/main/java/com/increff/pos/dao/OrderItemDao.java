@@ -44,7 +44,7 @@ public class OrderItemDao extends AbstractDao {
 	public List<Integer> selectWithRange(String start,String end,String brand,String category) {
 		
 		Query query= em().createNativeQuery("select a.id from orderitempojo as a inner join (select c.id from productpojo as c inner join brandpojo as d on c.brand_category=d.id where d.brand like :brand and d.category like :category) as b on a.productId=b.id "
-				+ "where a.id in (select a.id from orderitempojo as a inner join orderspojo as b on a.ordersId=b.id where b.time between :start and :end)");
+				+ "  inner join orderspojo as c on a.ordersId=c.id where c.time between :start and :end");
   
 		query.setParameter("start", start);
 		query.setParameter("end", end);

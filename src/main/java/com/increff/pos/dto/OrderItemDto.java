@@ -42,8 +42,8 @@ public class OrderItemDto {
 	
 	@Transactional(rollbackOn = ApiException.class)
 	public ItemData checkbarcode(OrderItemForm f) throws ApiException {
-		Validate.isEmpty(f);
 		Normalizer.normalize(f);
+		Validate.isEmpty(f);
 		ProductPojo p=productservice.fetchProduct(f.getBarcode());
 		InventoryPojo i=inventoryservice.get(p.getId());
 		if(i==null)
@@ -70,6 +70,6 @@ public class OrderItemDto {
 			inventory.setQuantity(i.getQuantity());
 			inventoryservice.order(inventory);
 			orderitemservice.add(Convertor.convert(i,p.getId()));
-		}	
+		}
 	}
 }

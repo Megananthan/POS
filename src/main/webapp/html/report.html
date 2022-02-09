@@ -50,19 +50,40 @@
 		&nbsp;
 		&nbsp;
 		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
 		
 		<br><br>
 		<br>
 		<div class="form-group">
-		  <label for="brandName" class="col-sm-4 col-form-label">Brand Name</label>
-		  <div class="col-sm-8">
-			<input type="text" class="form-control" name="brand" id="brandName" placeholder="enter brand name" >
+		  <label for="brandName" class="col-sm-6 col-form-label">Brand Name</label>
+		  <div class="col-sm-6">
+			<select name="brand" id="brandName" class="form-control">
+			</select>
+			<!-- <input type="text" class="form-control" name="brand" id="brandName" placeholder="enter brand name" > -->
 		  </div>
 		</div>
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
 		<div class="form-group">
 		  <label for="brandCategory" class="col-sm-2 col-form-label">Category</label>
 		  <div class="col-sm-10">
-			<input type="text" class="form-control" name="category" id="brandCategory" placeholder="enter category">
+			<select name="category" id="brandCategory" class="categorys form-control">
+				<option selected="true" disabled="disabled" value="select">--Select--</option>
+			</select>
+			<!-- <input type="text" class="form-control" name="category" id="brandCategory" placeholder="enter category"> -->
 		  </div>
 		</div>
 		<button type="button" class="btn btn-primary edit_btn" id="search">Search</button>

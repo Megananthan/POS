@@ -2,12 +2,8 @@ package com.increff.pos.model;
 
 public class ReportForm {
 
-//	@JsonDeserialize(using = LocalDateDeserializer.class)
-//	@JsonSerialize(using = LocalDateSerializer.class)
 	private String startDate;
 
-//	@JsonDeserialize(using = LocalDateDeserializer.class)
-//	@JsonSerialize(using = LocalDateSerializer.class)
 	private String endDate;
 
 	private String brand;

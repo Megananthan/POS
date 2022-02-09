@@ -22,21 +22,33 @@
 			      <input type="text" class="form-control" name="barcode" id="inputBarcode" placeholder="enter barcode of product" required>
 			    </div>
 			  </div>
-			  <div class="form-group">
+			  <div class="form-group" id="brand_drop">
 			    <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="brand" id="inputBrand" placeholder="enter brand name" required>
-			    </div>
+				<div class="col-sm-10">
+					<select name="brand" id="inputBrand" class="brands form-control">
+					</select>
+				</div>	
 			  </div>
-			  <div class="form-group">
-			    <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="form-control" name="category" id="inputCategory" placeholder="enter category name" required>
-			    </div>
+			  <div class="form-group" >
+				<label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
+				<div class="col-sm-10">
+					<select name="category" id="inputCategory" class="categorys form-control">
+						<option selected="true" disabled="disabled" value="select">--Select--</option>
+					</select>
+				</div>
 			  </div>
 			  <br>
 			  <br>
-			  <br>
+			  &nbsp;
+			  &nbsp;
+			  &nbsp;
+			  &nbsp;
+			  &nbsp;
+			  &nbsp;
+			  &nbsp;
+			  &nbsp;
+			  &nbsp;
+			  &nbsp;
 			  <div class="form-group">
 			    <label for="inputName" class="col-sm-2 col-form-label">Name</label>
 			    <div class="col-sm-10">
@@ -107,17 +119,20 @@
 				  <br>
 			      <br>
 				  <div class="form-group">
-					<label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
+					<label for="inputEditBrand" class="col-sm-2 col-form-label">Brand &nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" name="brand" placeholder="enter brand name" required>
+						<select name="brand" id="inputEditBrand"class="brands form-control">
+						</select>
 					</div>
 				  </div>
 				  <br>
 			      <br>
 				  <div class="form-group">
-					<label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
+					<label for="inputEditCategory" class="col-sm-2 col-form-label">Category &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" name="category" placeholder="enter category name" required>
+						<select name="category" id="inputEditCategory" class="categorys form-control">
+							<option selected="true" disabled="disabled" value="select">--Select--</option>
+						</select>
 					</div>
 				  </div>
 				  <br>

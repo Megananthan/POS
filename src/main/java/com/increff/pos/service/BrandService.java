@@ -36,6 +36,11 @@ public class BrandService {
 	public List<BrandPojo> getAll() {
 		return dao.selectAll();
 	}
+	
+	@Transactional
+	public List<BrandPojo> getAllCategory(String brand) {
+		return dao.selectAllCategory(brand);
+	}
 
 	@Transactional(rollbackOn  = ApiException.class)
 	public void update(int id, BrandPojo b) throws ApiException {
@@ -56,7 +61,7 @@ public class BrandService {
 	}
 	
 
-	@Transactional
+	@Transactional(rollbackOn = ApiException.class)
 	public BrandPojo checkId(int id) throws ApiException {
 		BrandPojo b = dao.select(id);
 		if (b == null) {
@@ -66,7 +71,7 @@ public class BrandService {
 	}
 	
 	@Transactional
-	public BrandPojo checkBrandCategory(String brand,String category) throws ApiException {
+	public BrandPojo checkBrandCategory(String brand,String category){
 		BrandPojo b=dao.selectBrandCategory(brand,category);
 		return b;
 	}

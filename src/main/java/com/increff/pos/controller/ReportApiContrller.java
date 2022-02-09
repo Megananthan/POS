@@ -1,5 +1,6 @@
 package com.increff.pos.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class ReportApiContrller {
 	
 	@ApiOperation(value = "Gets list of all order in the given period")
 	@RequestMapping(path = "/api/report", method = RequestMethod.POST)
-	public List<OrderItemData> getOrderItem(@RequestBody ReportForm form) throws ApiException {
+	public List<OrderItemData> getOrderItem(@RequestBody ReportForm form) throws ApiException, ParseException {
 		return(dto.getOrderItem(form));
 	}	
 

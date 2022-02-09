@@ -39,22 +39,23 @@
 }
 
 .edit_btn{
-    color: #fdae05;
+    color: #ff7b00;
 	background-color: #efefef;
-	border-color: #fdae05;
+	border-color: #ff7b00;
+    /* #fdae05 */
 }
 
 .edit_btn:hover{
     color: #efefef;
-	background-color: #fdae05;
-	border-color: #fdae05;
+	background-color: #ff7b00;
+	border-color: #ff7b00;
 }
 
 .icon{
     font-size: 150px;
 }
 .box{
-    border: 2px solid #00b44b;
+    border: 2px solid #05d2f7;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 70px;

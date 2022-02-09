@@ -5,6 +5,60 @@ function getBrandUrl(){
 }
 
 
+function getBrandList(){
+	var url = $("meta[name=baseUrl]").attr("content")+"/api/brand";
+	$.ajax({
+	   url: url,
+	   type: 'GET',
+	   success: function(data) {
+	   		displayBrandList(data);  
+	   },
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
+	});
+}
+function displayBrandList(data){
+	var $dropdown=$("#brandName")
+	$dropdown.empty()
+	var row='<option selected="true" disabled="disabled" value="select">--Select--</option>';
+	$dropdown.append(row);
+	for(var i in data){
+		var e=data[i];
+		var row='<option value='+e.brand+'>'+e.brand+'</option>';
+		$dropdown.append(row);
+	}
+}
+
+function getCategoryList(brand){
+	
+	console.log(brand);
+	var url = $("meta[name=baseUrl]").attr("content")+"/api/category/"+brand;
+	$.ajax({
+	   url: url,
+	   type: 'GET',
+	   success: function(data) {
+	   		displayCategoryList(data);  
+	   },
+	   error: function(response){
+		var responseMessage=JSON.parse(response.responseText).message;
+		errorDisplay('danger',responseMessage);
+	}
+	});
+}
+function displayCategoryList(data){
+	var $dropdown=$("#brandCategory");
+	$dropdown.empty();
+	var row='<option selected="true" disabled="disabled" value="select">--Select--</option>';
+	$dropdown.append(row);
+	for(var i in data){
+		var e=data[i];
+		var row='<option value='+e.category+'>'+e.category+'</option>';
+		$dropdown.append(row);
+	}
+}
+
 
 function getOrderItemList(){
 	var url = getBrandUrl();
@@ -15,14 +69,14 @@ function getOrderItemList(){
 	console.log(JSON.parse(json));
 	input["startDate"]=JSON.parse(json).startDate+" 00:00:00";
 	input["endDate"]=JSON.parse(json).endDate+" 23:59:59";
-	if(JSON.parse(json).brand=='')
+	if(JSON.parse(json)["brand"]==null)
 	{
 		input["brand"]="%";
 	}
 	else{
 		input["brand"]=JSON.parse(json).brand;
 	}
-	if(JSON.parse(json).category=='')
+	if(JSON.parse(json)["category"]==null)
 	{
 		input["category"]="%";
 	}
@@ -352,4 +406,10 @@ function init(){
 
 
 $(document).ready(init);
+$(document).ready(getBrandList);
+$("#brandName").change(function() {
+	var brand = $(this).val(); // get selected options value.
+	console.log("brand "+brand);
+	getCategoryList(brand);    
+});
 

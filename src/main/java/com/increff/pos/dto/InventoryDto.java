@@ -30,8 +30,8 @@ public class InventoryDto {
 		
 	@Transactional(rollbackOn = ApiException.class)
 	public void add(InventoryData inventorydata) throws ApiException {
-		Validate.isEmpty(inventorydata);
 		Normalizer.normalize(inventorydata);
+		Validate.isEmpty(inventorydata);
 		ProductPojo p=productservice.getByName(inventorydata.getName());
 		if(p==null)
 		{

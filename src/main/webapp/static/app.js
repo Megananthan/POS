@@ -12,6 +12,7 @@ function toJson($form){
 }
 
 function errorDisplay(template,message){
+    console.log(message);
     var $errorbar=$('#status-bar');
     var text='Success! ';
     if(template=='danger'){

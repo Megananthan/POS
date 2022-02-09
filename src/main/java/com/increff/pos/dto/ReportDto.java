@@ -1,12 +1,17 @@
 package com.increff.pos.dto;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.increff.pos.helper.Convertor;
+import com.increff.pos.helper.Normalizer;
+import com.increff.pos.helper.Validate;
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.InventoryData;
 import com.increff.pos.model.OrderItemData;
@@ -76,8 +81,11 @@ public class ReportDto {
 		return(Convertor.convert(p,b.getBrand(),b.getCategory()));
 	}
 	
-	public List<OrderItemData> getOrderItem(ReportForm form) throws ApiException
-	{
+	@Transactional(rollbackOn = ApiException.class)
+	public List<OrderItemData> getOrderItem(ReportForm form) throws ApiException, ParseException
+	{   
+		Normalizer.normalize(form);
+		Validate.isEmpty(form);
 		List<OrderItemPojo> listpojo = orderitemservice.getOrderItemList(form);
 		List<OrderItemData> listdata = new ArrayList<OrderItemData>();
 		for (OrderItemPojo p : listpojo) {
@@ -89,33 +97,5 @@ public class ReportDto {
 	}
 	
 
-//	public void add(BrandForm brandform) throws ApiException {
-//		BrandPojo b=Convertor.convert(brandform);
-//		Normalizer.normalize(b);
-//		brandservice.add(b);
-//	}
-//	
-//	public void delete(int id) {
-//		brandservice.delete(id);
-//	}
-//	
-//	public BrandData get(int id) throws ApiException {
-//		BrandPojo b = brandservice.get(id);
-//		return Convertor.convert(b);
-//	}
-//	
-//	public List<BrandData> getAll() {
-//		List<BrandPojo> listpojo = brandservice.getAll();
-//		List<BrandData> listdata = new ArrayList<BrandData>();
-//		for (BrandPojo p : listpojo) {
-//			listdata.add(Convertor.convert(p));
-//		}
-//		return listdata;
-//	}
-//	
-//	public void update(int id,BrandForm f) throws ApiException {
-//		BrandPojo b = Convertor.convert(f);
-//		Normalizer.normalize(b);
-//		brandservice.update(id, b);
-//	}
+
 }

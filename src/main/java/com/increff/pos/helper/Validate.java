@@ -125,7 +125,7 @@ public class Validate {
 		}
 		if(f.getBrand().isEmpty())
 		{
-			throw new ApiException("Category name cannot be empty");
+			throw new ApiException("Brand name cannot be empty");
 		}
 		if(f.getCategory().isEmpty())
 		{

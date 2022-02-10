@@ -28,8 +28,6 @@ public class Normalizer {
 	}
 	
 	public static void normalize(ReportForm f) {
-		f.setStartDate(StringUtil.toLowerCase(f.getStartDate()).trim());
-		f.setEndDate(StringUtil.toLowerCase(f.getEndDate()).trim());
 		f.setBrand(StringUtil.toLowerCase(f.getBrand()).trim());
 		f.setCategory(StringUtil.toLowerCase(f.getCategory()).trim());
 	}

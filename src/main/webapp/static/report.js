@@ -6,7 +6,7 @@ function getBrandUrl(){
 
 
 function getBrandList(){
-	var url = $("meta[name=baseUrl]").attr("content")+"/api/brand";
+	var url = $("meta[name=baseUrl]").attr("content")+"/api/brandList";
 	$.ajax({
 	   url: url,
 	   type: 'GET',
@@ -22,17 +22,17 @@ function getBrandList(){
 function displayBrandList(data){
 	var $dropdown=$("#brandName")
 	$dropdown.empty()
-	var row='<option selected="true" disabled="disabled" value="select">--Select--</option>';
+	var row='<option selected="true" value="">--Select--</option>';
 	$dropdown.append(row);
 	for(var i in data){
 		var e=data[i];
-		var row='<option value='+e.brand+'>'+e.brand+'</option>';
+		var row='<option value='+e+'>'+e+'</option>';
 		$dropdown.append(row);
 	}
 }
 
-function getCategoryList(brand){
-	var url = $("meta[name=baseUrl]").attr("content")+"/api/category/"+brand;
+function getCategoryList(){
+	var url = $("meta[name=baseUrl]").attr("content")+"/api/category";
 	$.ajax({
 	   url: url,
 	   type: 'GET',
@@ -48,11 +48,11 @@ function getCategoryList(brand){
 function displayCategoryList(data){
 	var $dropdown=$("#brandCategory");
 	$dropdown.empty();
-	var row='<option selected="true" disabled="disabled" value="select">--Select--</option>';
+	var row='<option selected="true" value="">--Select--</option>';
 	$dropdown.append(row);
 	for(var i in data){
 		var e=data[i];
-		var row='<option value='+e.category+'>'+e.category+'</option>';
+		var row='<option value='+e+'>'+e+'</option>';
 		$dropdown.append(row);
 	}
 }
@@ -65,14 +65,14 @@ function getOrderItemList(){
 	var json = toJson($form);
 	input["startDate"]=JSON.parse(json).startDate+" 00:00:00";
 	input["endDate"]=JSON.parse(json).endDate+" 23:59:59";
-	if(JSON.parse(json)["brand"]==null)
+	if(JSON.parse(json)["brand"]==null || JSON.parse(json)["brand"]=="")
 	{
 		input["brand"]="%";
 	}
 	else{
 		input["brand"]=JSON.parse(json).brand;
 	}
-	if(JSON.parse(json)["category"]==null)
+	if(JSON.parse(json)["category"]==null || JSON.parse(json)["category"]=="")
 	{
 		input["category"]="%";
 	}
@@ -80,7 +80,7 @@ function getOrderItemList(){
 		input["category"]=JSON.parse(json).category;
 	}
 	pass=input;
-	input=JSON.stringify(input)
+	input=JSON.stringify(input);
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -218,18 +218,20 @@ function displayItemList(data,input){
 	$tbody.empty();
 	$tfoot.empty();
 	var foot='<tr style="text-align: center;">' 
-	+'<td style="text-align: center;"colspan="4">No Record Found</td>'                             
+	+'<td style="text-align: center;"colspan="5">No Record Found</td>'                             
     +'</tr>';
 	$tfoot.append(foot);
 	var head=' <tr>'
-	+'<th class="brand_col" scope="col">Brand Name</th>'
+	+'<th class="brand_col" scope="col">Brand</th>'
 	+'<th class="category_col" scope="col">Category</th>'
 	+'<th class="product_col" scope="col">Product</th>'
+	+'<th scope="col">Quantity</th>'
 	+'<th scope="col">Revenue</th>'
     +'</tr>';
 	$thead.append(head);
-	$("#norecord").css("display","visible");
+	$("#norecord").css("visibility","visible");
 	var check={}
+	var q={}
 	if(input["brand"]!="%" && input["category"]!="%")
 	{	
 		$(".product_col").css("display","visible");
@@ -240,21 +242,22 @@ function displayItemList(data,input){
 					if(check[e.name]==null)
 				{
 					check[e.name]=e.quantity*e.mrp;
+					q[e.name]=e.quantity;
 				}
 				else{
 					check[e.name]+=e.quantity*e.mrp;
+					q[e.name]+=e.quantity;
 				}
 			}
 		}
-		if(Object.keys(check).length!=0){
-			$("#norecord").css("display","none");
-		}
+	
 		for(var i in check){
 			var row = '<tr>'
 			+ '<td  class="brand_col"></td>'
 			+ '<td class="category_col"></td>'
 			+ '<td class="product_col">' + i + '</td>'
-			+ '<td>'  + check[i] + '</td>'
+			+ '<td>'  + q[i] + '</td>'
+			+ '<td>'  + check[i].toFixed(2) + '</td>'
 			+ '</tr>';
 			$tbody.append(row);
 		}
@@ -274,21 +277,21 @@ function displayItemList(data,input){
 					if(check[e.brand]==null)
 				{
 					check[e.brand]=e.quantity*e.mrp;
+					q[e.brand]=e.quantity;
 				}
 				else{
 					check[e.brand]+=e.quantity*e.mrp;
+					q[e.brand]+=e.quantity;
 				}
 			}
-		}
-		if(Object.keys(check).length!=0){
-			$("#norecord").css("display","none");
 		}
 		for(var i in check){
 			var row = '<tr>'
 			+ '<td  class="brand_col">' + i + '</td>'
 			+ '<td class="category_col"></td>'
 			+ '<td class="product_col"></td>'
-			+ '<td>'  + check[i] + '</td>'
+			+ '<td>'  + q[i] + '</td>'
+			+ '<td>'  + check[i].toFixed(2) + '</td>'
 			+ '</tr>';
 			$tbody.append(row);
 		}
@@ -308,21 +311,22 @@ function displayItemList(data,input){
 					if(check[e.category]==null)
 				{
 					check[e.category]=e.quantity*e.mrp;
+					q[e.category]=e.quantity;
 				}
 				else{
 					check[e.category]+=e.quantity*e.mrp;
+					q[e.category]+=e.quantity;
 				}
 			}
 		}
-		if(Object.keys(check).length!=0){
-			$("#norecord").css("display","none");
-		}
+		
 		for(var i in check){
 			var row = '<tr>'
 			+ '<td  class="brand_col"></td>'
 			+ '<td class="category_col">' + i + '</td>'
 			+ '<td class="product_col"></td>'
-			+ '<td>'  + check[i] + '</td>'
+			+ '<td>'  + q[i] + '</td>'
+			+ '<td>'  + check[i].toFixed(2) + '</td>'
 			+ '</tr>';
 			$tbody.append(row);
 		}
@@ -335,35 +339,39 @@ function displayItemList(data,input){
 	else
 	{
 		$(".product_col").css("display","visible");
+		b={}
+		c={}
 		for(var i in data){
 			var e = data[i];
 			if(check[e.name]==null)
 			{
 				check[e.name]=e.quantity*e.mrp;
+				b[e.name]=e.brand;
+				c[e.name]=e.category;
+				q[e.name]=e.quantity;
 			}
 			else{
 				check[e.name]+=e.quantity*e.mrp;
+				q[e.name]+=e.quantity;
 			}
-		}
-		if(Object.keys(check).length!=0){
-			$("#norecord").css("display","none");
 		}
 		for(var i in check){
 			var row = '<tr>'
-			+ '<td  class="brand_col"></td>'
-			+ '<td class="category_col"></td>'
+			+ '<td  class="brand_col">' + b[i] + '</td>'
+			+ '<td class="category_col">' + c[i] + '</td>'
 			+ '<td class="product_col">' + i + '</td>'
-			+ '<td>'  + check[i] + '</td>'
+			+ '<td>'  + q[i] + '</td>'
+			+ '<td>'  + check[i].toFixed(2) + '</td>'
 			+ '</tr>';
 			$tbody.append(row);
 		}
-		$(".category_col").css("display","none");
-		$(".brand_col").css("display","none");
+		$(".category_col").css("display","visible");
+		$(".brand_col").css("display","visible");
 		$(".product_col").css("display","visible");
 		
 	}
-	if(Object.keys(check).length==0){
-		$("#norecord").css("display","visible");
+	if(Object.keys(check).length!=0){
+		$("#norecord").css("visibility","hidden");
 	}
 
 }
@@ -381,8 +389,5 @@ function init(){
 
 $(document).ready(init);
 $(document).ready(getBrandList);
-$("#brandName").change(function() {
-	var brand = $(this).val(); // get selected options value.
-	getCategoryList(brand);    
-});
+$(document).ready(getCategoryList);
 

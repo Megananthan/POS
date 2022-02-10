@@ -42,18 +42,30 @@ public class BrandApiContrller {
 		return(dto.get(id)); 
 	}
 
-	@ApiOperation(value = "Gets list of all Brands")
+	@ApiOperation(value = "Gets list of all Brand and category")
 	@RequestMapping(path = "/api/brand", method = RequestMethod.GET)
 	public List<BrandData> getAll() {
 		return(dto.getAll());
 	}
 	
-	@ApiOperation(value = "Gets list of all Category")
-	@RequestMapping(path = "/api/category/{brand}", method = RequestMethod.GET)
-	public List<BrandData> getAllCategory(@PathVariable String brand) {
-		return(dto.getAllCategory(brand));
+	@ApiOperation(value = "Gets list of all Brands")
+	@RequestMapping(path = "/api/brandList", method = RequestMethod.GET)
+	public List<String> getAllBrand() {
+		return(dto.getAllBrand());
 	}
-
+	
+	@ApiOperation(value = "Gets list of all Category")
+	@RequestMapping(path = "/api/category", method = RequestMethod.GET)
+	public List<String> getAllCategory() {
+		return(dto.getAllCategory());
+	}
+	
+	@ApiOperation(value = "Gets list of all Category with brand")
+	@RequestMapping(path = "/api/category/{brand}", method = RequestMethod.GET)
+	public List<String> getCategoryWithBrand(@PathVariable String brand) {
+		return(dto.getCategoryWithBrand(brand));
+	}
+	
 	@ApiOperation(value = "Updates an brand")
 	@RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)
 	public void update(@PathVariable int id, @RequestBody BrandForm brandform) throws ApiException {

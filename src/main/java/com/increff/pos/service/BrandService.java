@@ -17,9 +17,9 @@ public class BrandService {
 	private BrandDao dao;
 
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(BrandPojo b) throws ApiException {
-		checkBrandCategoryExist(b);
-		dao.insert(b);
+	public void add(BrandPojo brandpojo) throws ApiException {
+		checkBrandCategoryExist(brandpojo);
+		dao.insert(brandpojo);
 	}
 
 	@Transactional
@@ -38,36 +38,44 @@ public class BrandService {
 	}
 	
 	@Transactional
-	public List<BrandPojo> getAllCategory(String brand) {
-		return dao.selectAllCategory(brand);
+	public List<String> getAllBrand() {
+		return dao.selectAllBrand();
+	}
+	
+	@Transactional
+	public List<String> getAllCategory() {
+		return dao.selectAllCategory();
+	}
+	
+	@Transactional
+	public List<String> getCategoryWithBrand(String brand) {
+		return dao.selectCategoryWithBrand(brand);
 	}
 
 	@Transactional(rollbackOn  = ApiException.class)
-	public void update(int id, BrandPojo b) throws ApiException {
+	public void update(int id, BrandPojo brandpojo) throws ApiException {
 		BrandPojo newBrand = checkId(id);
-		checkBrandCategoryExist(b);
-		newBrand.setBrand(b.getBrand());
-		newBrand.setCategory(b.getCategory());
+		checkBrandCategoryExist(brandpojo);
+		newBrand.setBrand(brandpojo.getBrand());
+		newBrand.setCategory(brandpojo.getCategory());
 		dao.update(newBrand);
 	}
 	
 	@Transactional
-	public void checkBrandCategoryExist(BrandPojo b) throws ApiException {
-		if(!(checkBrandCategory(b.getBrand(),b.getCategory())==null))
+	public void checkBrandCategoryExist(BrandPojo brandpojo) throws ApiException {
+		if(!(checkBrandCategory(brandpojo.getBrand(),brandpojo.getCategory())==null))
 		{
 			throw new ApiException("Brand category pair already exist");
 		}
-		
 	}
 	
-
 	@Transactional(rollbackOn = ApiException.class)
 	public BrandPojo checkId(int id) throws ApiException {
-		BrandPojo b = dao.select(id);
-		if (b == null) {
+		BrandPojo brandpojo = dao.select(id);
+		if (brandpojo == null) {
 			throw new ApiException("Brand with given ID does not exist, id: " + id);
 		}
-		return b;
+		return brandpojo;
 	}
 	
 	@Transactional
@@ -75,6 +83,4 @@ public class BrandService {
 		BrandPojo b=dao.selectBrandCategory(brand,category);
 		return b;
 	}
-
-	
 }

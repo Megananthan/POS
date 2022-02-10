@@ -33,23 +33,23 @@ public class BrandDto {
 	public void add(BrandForm brandform) throws ApiException {
 		Normalizer.normalize(brandform);
 		Validate.isEmpty(brandform);
-		BrandPojo b=Convertor.convert(brandform);
-		brandservice.add(b);
+		BrandPojo brandpojo=Convertor.convert(brandform);
+		brandservice.add(brandpojo);
 	}
 	
 	public void delete(int id) {
 		brandservice.delete(id);
-		List<ProductPojo> p=productservice.getAllWithBrandCategory(id);
-		for(ProductPojo i:p) {
-			productservice.delete(i.getId());
-			inventoryservice.delete(i.getId());
+		List<ProductPojo> productpojoList=productservice.getAllWithBrandCategory(id);
+		for(ProductPojo productpojo:productpojoList) {
+			productservice.delete(productpojo.getId());
+			inventoryservice.delete(productpojo.getId());
 		}
 		
 	}
 	
 	public BrandData get(int id) throws ApiException {
-		BrandPojo b = brandservice.get(id);
-		return Convertor.convert(b);
+		BrandPojo brandpojo = brandservice.get(id);
+		return Convertor.convert(brandpojo);
 	}
 	
 	public List<BrandData> getAll() {
@@ -61,19 +61,23 @@ public class BrandDto {
 		return listdata;
 	}
 	
-	public List<BrandData> getAllCategory(String brand) {
-		List<BrandPojo> listpojo = brandservice.getAllCategory(brand);
-		List<BrandData> listdata = new ArrayList<BrandData>();
-		for (BrandPojo p : listpojo) {
-			listdata.add(Convertor.convert(p));
-		}
-		return listdata;
+	public List<String> getAllBrand() {
+		return brandservice.getAllBrand();
 	}
 	
-	public void update(int id,BrandForm f) throws ApiException {
-		Normalizer.normalize(f);
-		Validate.isEmpty(f);
-		BrandPojo b = Convertor.convert(f);
-		brandservice.update(id, b);
+	public List<String> getAllCategory() {
+		return brandservice.getAllCategory();
+	}
+	
+	
+	public List<String> getCategoryWithBrand(String brand) {
+		return brandservice.getCategoryWithBrand(brand);
+	}
+	
+	public void update(int id,BrandForm brandform) throws ApiException {
+		Normalizer.normalize(brandform);
+		Validate.isEmpty(brandform);
+		BrandPojo brandpojo = Convertor.convert(brandform);
+		brandservice.update(id, brandpojo);
 	}
 }

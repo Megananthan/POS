@@ -170,7 +170,7 @@ function downloadErrors(){
 }
 
 function getBrandList(){
-	var url = $("meta[name=baseUrl]").attr("content")+"/api/brand";
+	var url = $("meta[name=baseUrl]").attr("content")+"/api/brandList";
 	$.ajax({
 	   url: url,
 	   type: 'GET',
@@ -190,7 +190,7 @@ function displayBrandList(data){
 	$dropdown.append(row);
 	for(var i in data){
 		var e=data[i];
-		var row='<option value='+e.brand+'>'+e.brand+'</option>';
+		var row='<option value='+e+'>'+e+'</option>';
 		$dropdown.append(row);
 	}
 }
@@ -218,7 +218,7 @@ function displayCategoryList(data,change){
 	$dropdown.append(row);
 	for(var i in data){
 		var e=data[i];
-		var row='<option value='+e.category+'>'+e.category+'</option>';
+		var row='<option value='+e+'>'+e+'</option>';
 		$dropdown.append(row);
 	}
 }

@@ -78,8 +78,8 @@
 		&nbsp;
 		&nbsp;
 		<div class="form-group">
-		  <label for="brandCategory" class="col-sm-2 col-form-label">Category</label>
-		  <div class="col-sm-10">
+		  <label for="brandCategory" class="col-sm-3 col-form-label">Category</label>
+		  <div class="col-sm-9">
 			<select name="category" id="brandCategory" class="categorys form-control">
 				<option selected="true" disabled="disabled" value="select">--Select--</option>
 			</select>
@@ -99,17 +99,18 @@
 	<table class="table table-striped" id="report-table">
 	  <thead class="thead-dark">
 	    <tr>
-	      <th class="brand_col" scope="col">Brand Name</th>
+	      <th class="brand_col" scope="col">Brand</th>
 	      <th class="category_col" scope="col">Category</th>
 		  <th class="product_col" scope="col">Product</th>
+		  <th scope="col">Quantity</th>
 	      <th scope="col">Revenue</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	  </tbody>
-	  <tfoot  id="norecord" style="display:visible;">
+	  <tfoot  id="norecord" style="visibility:visible;">
 		<tr style="text-align: center;"> 
-			<td style="text-align: center;"colspan="4">No Record Found</td>                              
+			<td style="text-align: center;"colspan="5">No Record Found</td>                              
 		</tr>
 	  </tfoot>
 	</table>

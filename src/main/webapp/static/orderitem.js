@@ -121,8 +121,8 @@ function displayOrderItemList(data){
 		+ '<td>' + e.barcode + '</td>'
 		+ '<td>' + e.name + '</td>'
 		+ '<td>' + e.quantity + '</td>'
-		+ '<td>' + e.mrp + '</td>'
-		+ '<td>' + (e.mrp*e.quantity) + '</td>'
+		+ '<td>' + e.mrp.toFixed(2) + '</td>'
+		+ '<td>' + (e.mrp*e.quantity).toFixed(2) + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
@@ -134,7 +134,7 @@ function displayOrderItemList(data){
 		+ '<td></td>'
 		+ '<td></td>'
 		+ '<td style="font-weight:bold;">Total Amount : </td>'
-		+ '<td style="font-weight:bold;"> ' + amt + ' </td>'
+		+ '<td style="font-weight:bold;"> ' + amt.toFixed(2) + ' </td>'
 		+ '<td></td>'
 		+ '</tr>';
 	$tbody.append(row);
@@ -171,8 +171,8 @@ function submitOrder(event){
 		headers: {
 			'Content-Type': 'application/json'
 		},	   
-		success: function() {
-			var responseMessage="Order placed successfully";
+		success: function(data) {
+			var responseMessage="Order placed successfully Order ID:"+data;
 		    errorDisplay('success',responseMessage);
 			item=[];
 			dict={};

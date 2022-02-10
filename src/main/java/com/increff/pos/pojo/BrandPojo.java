@@ -11,6 +11,7 @@ public class BrandPojo {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)  
+	@Column(nullable = false)
 	private int id;
 	
 	@Column(nullable = false)

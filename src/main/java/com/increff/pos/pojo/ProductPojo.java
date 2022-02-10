@@ -18,6 +18,7 @@ public class ProductPojo implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)  
+	@Column(nullable = false)
 	private int id;
 	
 	@Column(nullable = false) 
@@ -28,6 +29,7 @@ public class ProductPojo implements Serializable{
 	@Column(nullable = false)
 	private String name;
 	
+	@Column(nullable = false)
 	private double mrp;
 	
 	public int getId() {

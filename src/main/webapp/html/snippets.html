@@ -15,7 +15,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-1" th:fragment="name_site_navbar">
   <a class="navbar-brand" th:href="@{/}">
-    <img th:src="@{/static/logo.jpg}" class="d-inline-block align-top" alt="">
+    <img th:src="@{/static/logo.jpg}" class="d-inline-block align-top" alt="logo">
   </a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,12 +23,6 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/site/features}">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/site/pricing}">Pricing</a>
-      </li>
     </ul>
     
     <ul class="navbar-nav ml-auto">
@@ -41,7 +35,7 @@
 </nav>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light  mb-1" th:fragment="name_app_navbar">
-  <a class="navbar-brand" th:href="@{/}">
+  <a class="navbar-brand" th:href="@{/ui/home}">
     <img th:src="@{/static/logo.jpg}" class="d-inline-block align-top" alt="">
   </a>
 
@@ -50,9 +44,9 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item navset">
+      <!-- <li class="nav-item navset">
         <a class="nav-link navcolor" th:href="@{/ui/home}">Home</a>
-      </li>
+      </li> -->
       <!-- <li class="nav-item navset">
         <a class="nav-link navcolor" th:href="@{/ui/employee}">Employees</a>
       </li>
@@ -75,12 +69,6 @@
         <a class="nav-link navcolor" th:href="@{/ui/report}">Report</a>
       </li>
     </ul>
-    <!-- <div class="error alert alert-warning alert-dismissible fade show" role="alert">
-       <p class="err_msg">You should check in on some of those fields below.</p>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div> -->
     <div id="status-bar">
     </div>
     <ul class="navbar-nav ml-auto">

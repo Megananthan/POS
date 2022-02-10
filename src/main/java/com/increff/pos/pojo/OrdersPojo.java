@@ -15,6 +15,7 @@ public class OrdersPojo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_id_seq")
+	@Column(nullable = false)
 	private int id;
 	
 	@Column(nullable = false)

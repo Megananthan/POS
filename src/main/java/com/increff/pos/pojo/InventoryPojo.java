@@ -1,5 +1,6 @@
 package com.increff.pos.pojo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,8 +8,10 @@ import javax.persistence.Id;
 public class InventoryPojo{
 	
 	@Id
+	@Column(nullable = false)
 	private int id;
 	
+	@Column(nullable = false)
 	private int quantity;
 	
 	public int getId() {

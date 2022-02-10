@@ -58,7 +58,7 @@ public class OrderItemDto {
 	}
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(List<ItemForm> f) throws ApiException, IOException, FOPException, TransformerException {
+	public int add(List<ItemForm> f) throws ApiException, IOException, FOPException, TransformerException {
 		OrdersPojo p=Convertor.convert();
 		orderservice.add(p);
 		InventoryPojo inventory=new InventoryPojo();
@@ -71,5 +71,6 @@ public class OrderItemDto {
 			inventoryservice.order(inventory);
 			orderitemservice.add(Convertor.convert(i,p.getId()));
 		}
+		return p.getId();
 	}
 }

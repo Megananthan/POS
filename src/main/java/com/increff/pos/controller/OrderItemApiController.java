@@ -36,8 +36,8 @@ public class OrderItemApiController {
 
 	@ApiOperation(value = "Adds an order")
 	@RequestMapping(path = "/api/orderitem/order", method = RequestMethod.POST)
-	public void add(@RequestBody List<ItemForm> form) throws ApiException, IOException, FOPException, TransformerException {
-		dto.add(form);
+	public int add(@RequestBody List<ItemForm> form) throws ApiException, IOException, FOPException, TransformerException {
+		return dto.add(form);
 	}
 	
 }

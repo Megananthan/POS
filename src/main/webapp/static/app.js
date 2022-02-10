@@ -18,7 +18,7 @@ function errorDisplay(template,message){
         text='Failed! ';
     }
     $errorbar.empty();
-    var str='<div class="alert alert-'+template + ' alert-dismissable">'+
+    var str='<div style="position: absolute; top: 0; right: 10px;" class="alert alert-'+template + ' alert-dismissable">'+
         '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+
         '<strong>'+ text + '</strong>' + message +
         '</div>';

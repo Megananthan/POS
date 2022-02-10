@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.increff.pos.helper.Convertor;
 import com.increff.pos.helper.Normalizer;
 import com.increff.pos.helper.Validate;
+import com.increff.pos.model.InventoryForm;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
 import com.increff.pos.pojo.BrandPojo;
@@ -38,7 +39,11 @@ public class ProductDto {
 		Validate.isEmpty(f);
 		BrandPojo b=fetchBrand(f);
 		ProductPojo p=Convertor.convert(f,b.getId());
-		productservice.add(p);		
+		productservice.add(p);
+		InventoryForm inventoryform=new InventoryForm();
+		inventoryform.setId(p.getId());
+		inventoryform.setQuantity(0);
+		inventoryservice.add(Convertor.convert(inventoryform));
 	}
 	
 	public void delete(int id) {

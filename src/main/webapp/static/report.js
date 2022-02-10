@@ -169,7 +169,7 @@ function downloadProduct(data){
 		d["Barcode"]=data[i].barcode;
 		d["Brand"]=data[i].brand;
 		d["Category"]=data[i].category;
-		d["MRP"]=data[i].mrp;
+		d["MRP"]=data[i].mrp.toFixed(2);
 		temp.push(d);
 	}
 	writeFile(temp,'Product-Report');

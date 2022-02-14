@@ -22,11 +22,6 @@ public class BrandService {
 		dao.insert(brandpojo);
 	}
 
-	@Transactional
-	public void delete(int id) {
-		dao.delete(id);
-	}
-
 	@Transactional(rollbackOn = ApiException.class)
 	public BrandPojo get(int id) throws ApiException {
 		return checkId(id);

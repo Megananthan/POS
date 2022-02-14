@@ -16,13 +16,7 @@ public class OrdersService {
 
 	@Transactional(rollbackOn = ApiException.class)
 	public void add(OrdersPojo p) throws ApiException {
-//		System.out.println("Inside service");
-
-//		System.out.println(p.getTime());
 		dao.insert(p);
-		
-//		System.out.println(p.getTime());
-//		System.out.println("finished service");
 	}
 
 	@Transactional
@@ -35,12 +29,6 @@ public class OrdersService {
 		return checkId(id);
 	}
 	
-//	@Transactional(rollbackOn = ApiException.class)
-//	public int getByTime(String time) throws ApiException {
-//		return ((dao.selectTime(time)).getId());
-//	}
-
-
 	@Transactional
 	public OrdersPojo checkId(int id) throws ApiException {
 		OrdersPojo p = dao.select(id);

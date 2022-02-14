@@ -12,11 +12,8 @@ import com.increff.pos.helper.Validate;
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.BrandForm;
 import com.increff.pos.pojo.BrandPojo;
-import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.service.ApiException;
 import com.increff.pos.service.BrandService;
-import com.increff.pos.service.InventoryService;
-import com.increff.pos.service.ProductService;
 
 @Service
 public class BrandDto {
@@ -24,27 +21,11 @@ public class BrandDto {
 	@Autowired
 	private BrandService brandservice;
 	
-	@Autowired
-	private ProductService productservice;
-	
-	@Autowired
-	private InventoryService inventoryservice;
-	
 	public void add(BrandForm brandform) throws ApiException {
 		Normalizer.normalize(brandform);
 		Validate.isEmpty(brandform);
 		BrandPojo brandpojo=Convertor.convert(brandform);
 		brandservice.add(brandpojo);
-	}
-	
-	public void delete(int id) {
-		brandservice.delete(id);
-		List<ProductPojo> productpojoList=productservice.getAllWithBrandCategory(id);
-		for(ProductPojo productpojo:productpojoList) {
-			productservice.delete(productpojo.getId());
-			inventoryservice.delete(productpojo.getId());
-		}
-		
 	}
 	
 	public BrandData get(int id) throws ApiException {
@@ -55,8 +36,8 @@ public class BrandDto {
 	public List<BrandData> getAll() {
 		List<BrandPojo> listpojo = brandservice.getAll();
 		List<BrandData> listdata = new ArrayList<BrandData>();
-		for (BrandPojo p : listpojo) {
-			listdata.add(Convertor.convert(p));
+		for (BrandPojo brandpojo : listpojo) {
+			listdata.add(Convertor.convert(brandpojo));
 		}
 		return listdata;
 	}

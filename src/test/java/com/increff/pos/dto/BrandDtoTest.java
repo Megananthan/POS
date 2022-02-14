@@ -1,4 +1,4 @@
-package com.increff.pos.service;
+package com.increff.pos.dto;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,24 +6,27 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.increff.pos.dao.BrandDao;
+import com.increff.pos.model.BrandData;
+import com.increff.pos.model.BrandForm;
 import com.increff.pos.pojo.BrandPojo;
+import com.increff.pos.service.ApiException;
 
-public class BrandServiceTest extends AbstractUnitTest {
+public class BrandDtoTest extends AbstractUnitTest {
 	@Autowired
-	private BrandService service;
+	private BrandDto dto;
 	
 	@Autowired
 	private BrandDao dao;
 	
 	@Test
 	public void testAdd() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		service.add(brandpojo);
+		BrandForm brandform = new BrandForm();
+		brandform.setBrand("    PuMa");
+		brandform.setCategory(" cLoTh ");
+		dto.add(brandform);
 		BrandPojo db=dao.selectAll().get(0);
-		assertEquals(brandpojo.getBrand(),db.getBrand());
-		assertEquals(brandpojo.getCategory(),db.getCategory());
+		assertEquals("puma",db.getBrand());
+		assertEquals("cloth",db.getCategory());
 	}
 	
 	@Test
@@ -32,7 +35,7 @@ public class BrandServiceTest extends AbstractUnitTest {
 		brandpojo.setBrand("puma");
 		brandpojo.setCategory("cloth");
 		dao.insert(brandpojo);
-		BrandPojo result=service.get(brandpojo.getId());
+		BrandData result=dto.get(brandpojo.getId());
 		assertEquals(result.getBrand(),brandpojo.getBrand());
 		assertEquals(result.getCategory(),brandpojo.getCategory());
 	}
@@ -43,7 +46,7 @@ public class BrandServiceTest extends AbstractUnitTest {
 		brandpojo.setBrand("puma");
 		brandpojo.setCategory("cloth");
 		dao.insert(brandpojo);
-		assertEquals(service.getAll().size(),dao.selectAll().size());
+		assertEquals(dto.getAll().size(),dao.selectAll().size());
 	}
 	
 	@Test
@@ -52,7 +55,7 @@ public class BrandServiceTest extends AbstractUnitTest {
 		brandpojo.setBrand("puma");
 		brandpojo.setCategory("cloth");
 		dao.insert(brandpojo);
-		assertEquals(service.getAllBrand().size(),dao.selectAllBrand().size());
+		assertEquals(dto.getAllBrand().size(),dao.selectAllBrand().size());
 	}
 	
 	@Test
@@ -61,7 +64,7 @@ public class BrandServiceTest extends AbstractUnitTest {
 		brandpojo.setBrand("puma");
 		brandpojo.setCategory("cloth");
 		dao.insert(brandpojo);
-		assertEquals(service.getAllCategory().size(),dao.selectAllCategory().size());
+		assertEquals(dto.getAllCategory().size(),dao.selectAllCategory().size());
 	}
 	
 	@Test
@@ -70,7 +73,7 @@ public class BrandServiceTest extends AbstractUnitTest {
 		brandpojo.setBrand("puma");
 		brandpojo.setCategory("cloth");
 		dao.insert(brandpojo);
-		assertEquals(service.getCategoryWithBrand(brandpojo.getBrand()).get(0),brandpojo.getCategory());
+		assertEquals(dto.getCategoryWithBrand(brandpojo.getBrand()).get(0),brandpojo.getCategory());
 	}
 	
 	@Test
@@ -79,13 +82,13 @@ public class BrandServiceTest extends AbstractUnitTest {
 		brandpojo.setBrand("puma");
 		brandpojo.setCategory("cloth");
 		dao.insert(brandpojo);
-		BrandPojo updated_brandpojo = new BrandPojo();
-		updated_brandpojo.setBrand("nike");
-		updated_brandpojo.setCategory("footwear");
-		service.update(brandpojo.getId(),updated_brandpojo);
+		BrandForm updated_brandform = new BrandForm();
+		updated_brandform.setBrand("nIKe");
+		updated_brandform.setCategory("fOotWEar");
+		dto.update(brandpojo.getId(),updated_brandform);
 		BrandPojo result=dao.select(brandpojo.getId());
-		assertEquals(result.getBrand(),updated_brandpojo.getBrand());
-		assertEquals(result.getCategory(),updated_brandpojo.getCategory());
+		assertEquals(result.getBrand(),"nike");
+		assertEquals(result.getCategory(),"footwear");
 	}
 
 //	@Test

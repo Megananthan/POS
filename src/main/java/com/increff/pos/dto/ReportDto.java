@@ -48,7 +48,7 @@ public class ReportDto {
 		List<InventoryData> listdata = new ArrayList<InventoryData>();
 		for (InventoryPojo i : listpojo) {
 			ProductPojo p=productservice.get(i.getId());
-			listdata.add(Convertor.convert(i,p.getName()));
+			listdata.add(Convertor.convert(i,p.getName(),p.getBarcode()));
 		}
 		return listdata;
 		

@@ -49,24 +49,6 @@ public class OrderItemService {
 		return result;
 	}
 
-//	@Transactional(rollbackOn  = ApiException.class)
-//	public void update(int id, OrderItemPojo p) throws ApiException {
-//		OrderItemPojo newOrders = checkId(id);
-//		checkBarcode(p);
-//		newOrders.setProductId(p.getProductId());
-//		newOrders.setQuantity(p.getQuantity());
-//		dao.update(newOrders);
-//	}
-	
-//	@Transactional
-//	public void checkBarcode(OrderItemPojo p) throws ApiException
-//	{
-//		if(!(dao.selectBarcode(p.getBarcode())==null))
-//		{
-//			throw new ApiException("Barcode already exist");
-//		}
-//	}
-
 	@Transactional
 	public OrderItemPojo checkId(int id) throws ApiException {
 		OrderItemPojo p = dao.select(id);
@@ -75,21 +57,4 @@ public class OrderItemService {
 		}
 		return p;
 	}
-	
-//	@Transactional
-//	public int fetchId(String barcode) throws ApiException
-//	{
-//		ProductPojo p=dao.selectBarcode(barcode);
-//		return(p.getId());
-//		
-//	}
-	
-//	@Transactional
-//	public ProductPojo getByName(String name) throws ApiException
-//	{
-//		ProductPojo p=dao.selectName(name);
-//		return(p);
-//		
-//	}
-	
 }

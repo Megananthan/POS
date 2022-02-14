@@ -214,8 +214,10 @@ function getCategoryList(brand,change){
 function displayCategoryList(data,change){
 	var $dropdown=$(change);
 	$dropdown.empty();
-	var row='<option selected="true" disabled="disabled" value="select">--Select--</option>';
-	$dropdown.append(row);
+	if(change=="#inputCategory"){
+		var row='<option selected="true" disabled="disabled" value="select">--Select--</option>';
+		$dropdown.append(row);
+	}
 	for(var i in data){
 		var e=data[i];
 		var row='<option value='+e+'>'+e+'</option>';
@@ -232,8 +234,7 @@ function displayProductList(data){
 	var c=1;
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button class="btn btn-primary delete_btn" onclick="deleteProduct(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button class="btn btn-primary edit_btn" onclick="displayEditProduct(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button class="btn btn-primary edit_btn" onclick="displayEditProduct(' + e.id + ')">edit</button>'
 		var row = '<tr>'
 		+ '<td class="coloumn">' + e.id + '</td>'
 		+ '<td>' + c + '</td>'
@@ -258,8 +259,10 @@ function displayEditProduct(id){
 	   		displayProduct(data);   
 	   },
 	   error: function(response){
+		// $('#edit-product-modal').modal('toggle');
 		var responseMessage=JSON.parse(response.responseText).message;
 		errorDisplay('danger',responseMessage);
+		// $('#edit-product-modal').modal('toggle');
 	}
 	});	
 }
@@ -297,14 +300,15 @@ function displayUploadData(){
 
 function displayProduct(data){
 	$("#product-edit-form input[name=barcode]").val(data.barcode);	
-	$("#product-edit-form input[name=brand]").val(data.brand);
-	$("#product-edit-form input[name=category]").val(data.category);	
+	$("#inputEditBrand option[value="+data.brand+"]").prop("selected",true);
+	var brand = $("#inputEditBrand").val(); 
+	getCategoryList(brand,"#inputEditCategory");
+	$("#inputEditCategory").val(data.category); 
 	$("#product-edit-form input[name=name]").val(data.name);
 	$("#product-edit-form input[name=mrp]").val(data.mrp);	
 	$("#product-edit-form input[name=id]").val(data.id);	
 	$('#edit-product-modal').modal('toggle');
 }
-
 
 //INITIALIZATION CODE
 function init(){

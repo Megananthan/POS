@@ -127,6 +127,7 @@ function displayInventoryList(data){
 		var row = '<tr>'
 		+ '<td class="coloumn">' + e.id + '</td>'
 		+ '<td>' + c + '</td>'
+		+ '<td>' + e.barcode + '</td>'
 		+ '<td>' + e.name + '</td>'
 		+ '<td>'  + e.quantity + '</td>'
 		+ '<td>' + buttonHtml + '</td>'

@@ -29,13 +29,6 @@ public class InventoryApiContrller {
 	public void add(@RequestBody InventoryData inventorydata) throws ApiException {
 		dto.add(inventorydata);
 	}
-	
-	@ApiOperation(value = "Deletes a inventory")
-	@RequestMapping(path = "/api/inventory/{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable int id) {
-		dto.delete(id);
-	}
-
 
 	@ApiOperation(value = "Gets a Inventory by ID")
 	@RequestMapping(path = "/api/inventory/{id}", method = RequestMethod.GET)

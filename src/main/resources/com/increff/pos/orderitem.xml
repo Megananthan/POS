@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <orderDetail>
-    <time>10-02-2022 10:27:06</time>
+    <time>10-02-2022 13:19:14</time>
     <item>
-        <barcode>a1</barcode>
-        <inventory>308</inventory>
-        <mrp>120.0</mrp>
-        <name>gym shirt</name>
-        <productId>5</productId>
-        <quantity>2</quantity>
+        <barcode>a8</barcode>
+        <inventory>1048</inventory>
+        <mrp>70.0</mrp>
+        <name>coffee</name>
+        <productId>12</productId>
+        <quantity>3</quantity>
     </item>
-    <item>
-        <barcode>a2</barcode>
-        <inventory>100</inventory>
-        <mrp>180.0</mrp>
-        <name>gym trouser</name>
-        <productId>6</productId>
-        <quantity>2</quantity>
-    </item>
-    <orderId>1002</orderId>
-    <total>600.0</total>
+    <orderId>1055</orderId>
+    <total>210.0</total>
 </orderDetail>

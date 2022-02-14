@@ -34,26 +34,21 @@ public class ProductDto {
 	private InventoryService inventoryservice;
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(ProductForm f) throws ApiException {
-		Normalizer.normalize(f);
-		Validate.isEmpty(f);
-		BrandPojo b=fetchBrand(f);
-		ProductPojo p=Convertor.convert(f,b.getId());
-		productservice.add(p);
+	public void add(ProductForm productform) throws ApiException {
+		Normalizer.normalize(productform);
+		Validate.isEmpty(productform);
+		BrandPojo brandpojo=fetchBrand(productform);
+		ProductPojo productpojo=Convertor.convert(productform,brandpojo.getId());
+		productservice.add(productpojo);
 		InventoryForm inventoryform=new InventoryForm();
-		inventoryform.setId(p.getId());
+		inventoryform.setId(productpojo.getId());
 		inventoryform.setQuantity(0);
 		inventoryservice.add(Convertor.convert(inventoryform));
 	}
 	
-	public void delete(int id) {
-		productservice.delete(id);
-		inventoryservice.delete(id);
-	}
-	
 	public ProductData get(int id) throws ApiException {
-		ProductPojo p = productservice.get(id);
-		return fetchProduct(p);
+		ProductPojo productpojo = productservice.get(id);
+		return fetchProduct(productpojo);
 	}
 	
 	public List<ProductData> getAll() throws ApiException {
@@ -66,27 +61,26 @@ public class ProductDto {
 	}
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public void update(int id,ProductForm f) throws ApiException {
-		Normalizer.normalize(f);
-		Validate.isEmpty(f);
-		BrandPojo b=fetchBrand(f);
-		ProductPojo p=Convertor.convert(f,b.getId());
-		productservice.update(id,p);
+	public void update(int id,ProductForm productform) throws ApiException {
+		Normalizer.normalize(productform);
+		Validate.isEmpty(productform);
+		BrandPojo brandpojo=fetchBrand(productform);
+		ProductPojo productpojo=Convertor.convert(productform,brandpojo.getId());
+		productservice.update(id,productpojo);
 	}
 	
-	public BrandPojo fetchBrand(ProductForm f) throws ApiException
+	public BrandPojo fetchBrand(ProductForm productform) throws ApiException
 	{
-		BrandPojo b=brandservice.checkBrandCategory(f.getBrand(), f.getCategory());
-		if (b== null) {
-			throw new ApiException("Given Brand Category pair does not exist \n brand: " + f.getBrand()+" category: "+ f.getCategory());
+		BrandPojo brandpojo=brandservice.checkBrandCategory(productform.getBrand(), productform.getCategory());
+		if (brandpojo== null) {
+			throw new ApiException("Given Brand Category pair does not exist \n brand: " + productform.getBrand()+" category: "+ productform.getCategory());
 		}
-		return b;
+		return brandpojo;
 	}
 	
-	public ProductData fetchProduct(ProductPojo p) throws ApiException
+	public ProductData fetchProduct(ProductPojo productpojo) throws ApiException
 	{
-		BrandPojo b=brandservice.get(p.getBrand_category());
-		return(Convertor.convert(p,b.getBrand(),b.getCategory()));
+		BrandPojo brandpojo=brandservice.get(productpojo.getBrand_category());
+		return(Convertor.convert(productpojo,brandpojo.getBrand(),brandpojo.getCategory()));
 	}
-
 }

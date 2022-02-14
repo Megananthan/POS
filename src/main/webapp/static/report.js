@@ -4,6 +4,22 @@ function getBrandUrl(){
 	return baseUrl + "/api/report";
 }
 
+function getToday(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+	if(dd<10) 
+	{
+		dd='0'+dd;
+	} 
+	if(mm<10) 
+	{
+		mm='0'+mm;
+	} 
+	today = yyyy+'-'+mm+'-'+dd;
+	$("input[type='date']").prop('max',today);
+}
 
 function getBrandList(){
 	var url = $("meta[name=baseUrl]").attr("content")+"/api/brandList";
@@ -179,6 +195,7 @@ function downloadInventory(data){
 	var temp=[];
 	for(var i=0;i<data.length;i++){
 		var d={}
+		d["Barcode"]=data[i].barcode;
 		d["Product Name"]=data[i].name;
 		d["Quantity"]=data[i].quantity;
 		temp.push(d);
@@ -384,10 +401,12 @@ function init(){
 	$('#get-product').click(getProduct);
 	$('#get-inventory').click(getInventory);
 	$('#search').click(getOrderItemList);
+	
 }
+
 
 
 $(document).ready(init);
 $(document).ready(getBrandList);
 $(document).ready(getCategoryList);
-
+$(document).ready(getToday);

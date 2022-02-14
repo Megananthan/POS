@@ -57,11 +57,12 @@ public class Convertor {
 		return p;
 	}
 
-	public static InventoryData convert(InventoryPojo i, String name) {
+	public static InventoryData convert(InventoryPojo i, String name,String barcode) {
 		InventoryData d = new InventoryData();// data
 		d.setQuantity(i.getQuantity());
 		d.setId(i.getId());
 		d.setName(name);
+		d.setBarcode(barcode);
 		return d;
 	}
 
@@ -71,13 +72,6 @@ public class Convertor {
 		p.setId(f.getId());
 		return p;
 	}
-
-//	public static OrderItemData convert(OrderItemPojo p) throws ApiException {
-//		OrderItemData d = new OrderItemData();
-//		d.setId(p.getId());
-//		d.setQuantity(p.getQuantity());
-//		return d;
-//	}
 
 	public static OrderItemPojo convert(ItemForm f, int order_id) {
 		OrderItemPojo p = new OrderItemPojo();

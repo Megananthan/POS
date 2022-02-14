@@ -17,14 +17,10 @@ public class InventoryService {
 	private InventoryDao dao;
 
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(InventoryPojo i) throws ApiException {
-		dao.insert(i);
+	public void add(InventoryPojo inventorypojo) throws ApiException {
+		dao.insert(inventorypojo);
 	}
 	
-	@Transactional
-	public void delete(int id) {
-		dao.delete(id);
-	}
 
 	@Transactional(rollbackOn = ApiException.class)
 	public InventoryPojo get(int id) throws ApiException {
@@ -37,32 +33,30 @@ public class InventoryService {
 	}
 
 	@Transactional(rollbackOn  = ApiException.class)
-	public void update(int id, InventoryPojo b) throws ApiException {
-		InventoryPojo newInventory = checkId(id);
-		newInventory.setQuantity(b.getQuantity());
-		dao.update(newInventory);
+	public void update(int id, InventoryPojo inventorypojo) throws ApiException {
+		InventoryPojo newInventorypojo = checkId(id);
+		newInventorypojo.setQuantity(inventorypojo.getQuantity());
+		dao.update(newInventorypojo);
 	}
 	
 	@Transactional(rollbackOn  = ApiException.class)
-	public void order(InventoryPojo p) throws ApiException {
-		InventoryPojo i = checkId(p.getId());
-		if(i.getQuantity()-p.getQuantity()<0)
+	public void order(InventoryPojo inventorypojo) throws ApiException {
+		InventoryPojo inventory = checkId(inventorypojo.getId());
+		if(inventory.getQuantity()-inventorypojo.getQuantity()<0)
 		{
-			throw new ApiException("Inventory only has "+i.getQuantity());
+			throw new ApiException("Inventory only has "+inventory.getQuantity());
 		}
-		i.setQuantity(i.getQuantity()-p.getQuantity());
-		dao.update(i);
+		inventory.setQuantity(inventory.getQuantity()-inventorypojo.getQuantity());
+		dao.update(inventory);
 	}
 
-	
-	
 	@Transactional
 	public InventoryPojo checkId(int id) throws ApiException {
-		InventoryPojo b = dao.select(id);
-		if (b == null) {
+		InventoryPojo inventorypojo = dao.select(id);
+		if (inventorypojo == null) {
 			throw new ApiException("Inventory with given id does not exist, id: " + id);
 		}
-		return b;
+		return inventorypojo;
 	}
 
 	

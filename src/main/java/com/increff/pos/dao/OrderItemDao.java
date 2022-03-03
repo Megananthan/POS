@@ -14,34 +14,18 @@ import com.increff.pos.pojo.OrderItemPojo;
 @Repository
 public class OrderItemDao extends AbstractDao {
 
-	private static String delete_id = "delete from OrderItemPojo p where id=:id";
-	private static String select_id = "select p from OrderItemPojo p where id=:id";
-	private static String select_all = "select p from OrderItemPojo p";
-	
+	private static String SELECT_ID = "select p from OrderItemPojo p where id=:id";
 	
 	@Transactional
 	public void insert(OrderItemPojo p) {
 		em().persist(p);
 	}
 
-	@Transactional
-	public int delete(int id) {
-		Query query = em().createQuery(delete_id);
-		query.setParameter("id", id);
-		return query.executeUpdate();
-	}
-
 	@Transactional(readOnly = true)
 	public OrderItemPojo select(int id) {
-		TypedQuery<OrderItemPojo> query = getQuery(select_id, OrderItemPojo.class);
+		TypedQuery<OrderItemPojo> query = getQuery(SELECT_ID, OrderItemPojo.class);
 		query.setParameter("id", id);
 		return getSingle(query);
-	}
-
-	@Transactional(readOnly = true)
-	public List<OrderItemPojo> selectAll() {
-		TypedQuery<OrderItemPojo> query = getQuery(select_all, OrderItemPojo.class);
-		return query.getResultList();
 	}
 	
 	@Transactional(readOnly = true)

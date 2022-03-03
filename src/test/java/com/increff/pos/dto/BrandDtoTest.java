@@ -20,83 +20,75 @@ public class BrandDtoTest extends AbstractUnitTest {
 	
 	@Test
 	public void testAdd() throws ApiException {
-		BrandForm brandform = new BrandForm();
-		brandform.setBrand("    PuMa");
-		brandform.setCategory(" cLoTh ");
-		dto.add(brandform);
-		BrandPojo db=dao.selectAll().get(0);
-		assertEquals("puma",db.getBrand());
-		assertEquals("cloth",db.getCategory());
+		BrandForm brandForm = new BrandForm();
+		brandForm.setBrand("    PuMa");
+		brandForm.setCategory(" cLoTh ");
+		dto.add(brandForm);
+		BrandPojo brandPojo=dao.selectAll().get(0);
+		assertEquals("puma",brandPojo.getBrand());
+		assertEquals("cloth",brandPojo.getCategory());
 	}
 	
 	@Test
 	public void testGet() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
-		BrandData result=dto.get(brandpojo.getId());
-		assertEquals(result.getBrand(),brandpojo.getBrand());
-		assertEquals(result.getCategory(),brandpojo.getCategory());
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
+		BrandData brandData=dto.get(brandPojo.getId());
+		assertEquals(brandData.getBrand(),brandPojo.getBrand());
+		assertEquals(brandData.getCategory(),brandPojo.getCategory());
 	}
 	
 	@Test
 	public void testGetAll() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
 		assertEquals(dto.getAll().size(),dao.selectAll().size());
 	}
 	
 	@Test
 	public void testGetAllBrand() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
 		assertEquals(dto.getAllBrand().size(),dao.selectAllBrand().size());
 	}
 	
 	@Test
 	public void testGetAllCategory() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
 		assertEquals(dto.getAllCategory().size(),dao.selectAllCategory().size());
 	}
 	
 	@Test
 	public void testGetCategoryWithBrand() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
-		assertEquals(dto.getCategoryWithBrand(brandpojo.getBrand()).get(0),brandpojo.getCategory());
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
+		assertEquals(dto.getCategoryWithBrand(brandPojo.getBrand()).get(0),brandPojo.getCategory());
 	}
 	
 	@Test
 	public void testUpdate() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
-		BrandForm updated_brandform = new BrandForm();
-		updated_brandform.setBrand("nIKe");
-		updated_brandform.setCategory("fOotWEar");
-		dto.update(brandpojo.getId(),updated_brandform);
-		BrandPojo result=dao.select(brandpojo.getId());
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
+		BrandForm updatedBrandForm = new BrandForm();
+		updatedBrandForm.setBrand("nIKe");
+		updatedBrandForm.setCategory("fOotWEar");
+		dto.update(brandPojo.getId(),updatedBrandForm);
+		BrandPojo result=dao.select(brandPojo.getId());
 		assertEquals(result.getBrand(),"nike");
 		assertEquals(result.getCategory(),"footwear");
 	}
 
-//	@Test
-//	public void testCheckBrandCategoryPair() throws ApiException {
-//		BrandPojo brandpojo = new BrandPojo();
-//		brandpojo.setBrand("puma");
-//		brandpojo.setCategory("cloth");
-//		dao.insert(brandpojo);
-//		assertEquals(ApiException.class,service.checkBrandCategory(brandpojo.getBrand(), brandpojo.getCategory()));
-//	}
 }

@@ -19,6 +19,8 @@ function addBrand(event){
        	'Content-Type': 'application/json'
        },	   
 	   success: function(response) {
+			var responseMessage="Brand Category pair added successfully";
+			errorDisplay('success',responseMessage);
 	   		getBrandList();  
 	   },
 	   error: function(response){
@@ -48,6 +50,8 @@ function updateBrand(event){
        	'Content-Type': 'application/json'
        },	   
 	   success: function(response) {
+		var responseMessage="Updated Brand Category pair successfully";
+		errorDisplay('success',responseMessage);
 	   		getBrandList();   
 	   },
 	   error: function(response){
@@ -133,7 +137,9 @@ function uploadRows(){
        },	   
 	   success: function(response) {
 	   		uploadRows();
-			getBrandList();  
+			getBrandList();
+			var responseMessage="All Brand Category pair added successfully";
+			errorDisplay('success',responseMessage);  
 	   },
 	   error: function(response){
 	   		row.error=JSON.parse(response.responseText).message

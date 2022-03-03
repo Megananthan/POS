@@ -19,30 +19,20 @@ public class OrderItemService {
 	private OrderItemDao dao;
 
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(OrderItemPojo p) throws ApiException {
-		dao.insert(p);
-	}
-
-	@Transactional
-	public void delete(int id) {
-		dao.delete(id);
+	public void add(OrderItemPojo orderItemPojo) throws ApiException {
+		dao.insert(orderItemPojo);
 	}
 
 	@Transactional(rollbackOn = ApiException.class)
 	public OrderItemPojo get(int id) throws ApiException {
 		return checkId(id);
 	}
-
-	@Transactional
-	public List<OrderItemPojo> getAll() {
-		return dao.selectAll();
-	}
 	
 	@Transactional
-	public List<OrderItemPojo> getOrderItemList(ReportForm f) throws ApiException {
-		List<Integer> list_id=dao.selectWithRange(f.getStartDate(),f.getEndDate(),f.getBrand(),f.getCategory());
+	public List<OrderItemPojo> getOrderItemList(ReportForm reportForm) throws ApiException {
+		List<Integer> listId=dao.selectWithRange(reportForm.getStartDate(),reportForm.getEndDate(),reportForm.getBrand(),reportForm.getCategory());
 		List<OrderItemPojo> result = new ArrayList<OrderItemPojo>();
-		for(int i: list_id)
+		for(int i: listId)
 		{
 			result.add(get(i));
 		}
@@ -51,10 +41,10 @@ public class OrderItemService {
 
 	@Transactional
 	public OrderItemPojo checkId(int id) throws ApiException {
-		OrderItemPojo p = dao.select(id);
-		if (p == null) {
+		OrderItemPojo orderItemPojo = dao.select(id);
+		if (orderItemPojo == null) {
 			throw new ApiException("Order with given ID does not exist, id: " + id);
 		}
-		return p;
+		return orderItemPojo;
 	}
 }

@@ -17,8 +17,8 @@ public class InventoryService {
 	private InventoryDao dao;
 
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(InventoryPojo inventorypojo) throws ApiException {
-		dao.insert(inventorypojo);
+	public void add(InventoryPojo inventoryPojo) throws ApiException {
+		dao.insert(inventoryPojo);
 	}
 	
 
@@ -33,30 +33,30 @@ public class InventoryService {
 	}
 
 	@Transactional(rollbackOn  = ApiException.class)
-	public void update(int id, InventoryPojo inventorypojo) throws ApiException {
-		InventoryPojo newInventorypojo = checkId(id);
-		newInventorypojo.setQuantity(inventorypojo.getQuantity());
-		dao.update(newInventorypojo);
+	public void update(int id, InventoryPojo inventoryPojo) throws ApiException {
+		InventoryPojo newInventoryPojo = checkId(id);
+		newInventoryPojo.setQuantity(inventoryPojo.getQuantity());
+		dao.update(newInventoryPojo);
 	}
 	
 	@Transactional(rollbackOn  = ApiException.class)
-	public void order(InventoryPojo inventorypojo) throws ApiException {
-		InventoryPojo inventory = checkId(inventorypojo.getId());
-		if(inventory.getQuantity()-inventorypojo.getQuantity()<0)
+	public void order(InventoryPojo inventoryPojo) throws ApiException {
+		InventoryPojo inventory = checkId(inventoryPojo.getId());
+		if(inventory.getQuantity()-inventoryPojo.getQuantity()<0)
 		{
 			throw new ApiException("Inventory only has "+inventory.getQuantity());
 		}
-		inventory.setQuantity(inventory.getQuantity()-inventorypojo.getQuantity());
+		inventory.setQuantity(inventory.getQuantity()-inventoryPojo.getQuantity());
 		dao.update(inventory);
 	}
 
 	@Transactional
 	public InventoryPojo checkId(int id) throws ApiException {
-		InventoryPojo inventorypojo = dao.select(id);
-		if (inventorypojo == null) {
+		InventoryPojo inventoryPojo = dao.select(id);
+		if (inventoryPojo == null) {
 			throw new ApiException("Inventory with given id does not exist, id: " + id);
 		}
-		return inventorypojo;
+		return inventoryPojo;
 	}
 
 	

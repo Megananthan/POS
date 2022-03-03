@@ -17,9 +17,9 @@ public class BrandService {
 	private BrandDao dao;
 
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(BrandPojo brandpojo) throws ApiException {
-		checkBrandCategoryExist(brandpojo);
-		dao.insert(brandpojo);
+	public void add(BrandPojo brandPojo) throws ApiException {
+		checkBrandCategoryExist(brandPojo);
+		dao.insert(brandPojo);
 	}
 
 	@Transactional(rollbackOn = ApiException.class)
@@ -48,17 +48,17 @@ public class BrandService {
 	}
 
 	@Transactional(rollbackOn  = ApiException.class)
-	public void update(int id, BrandPojo brandpojo) throws ApiException {
+	public void update(int id, BrandPojo brandPojo) throws ApiException {
 		BrandPojo newBrand = checkId(id);
-		checkBrandCategoryExist(brandpojo);
-		newBrand.setBrand(brandpojo.getBrand());
-		newBrand.setCategory(brandpojo.getCategory());
+		checkBrandCategoryExist(brandPojo);
+		newBrand.setBrand(brandPojo.getBrand());
+		newBrand.setCategory(brandPojo.getCategory());
 		dao.update(newBrand);
 	}
 	
 	@Transactional
-	public void checkBrandCategoryExist(BrandPojo brandpojo) throws ApiException {
-		if(!(checkBrandCategory(brandpojo.getBrand(),brandpojo.getCategory())==null))
+	public void checkBrandCategoryExist(BrandPojo brandPojo) throws ApiException {
+		if(!(checkBrandCategory(brandPojo.getBrand(),brandPojo.getCategory())==null))
 		{
 			throw new ApiException("Brand category pair already exist");
 		}
@@ -66,16 +66,16 @@ public class BrandService {
 	
 	@Transactional(rollbackOn = ApiException.class)
 	public BrandPojo checkId(int id) throws ApiException {
-		BrandPojo brandpojo = dao.select(id);
-		if (brandpojo == null) {
+		BrandPojo brandPojo = dao.select(id);
+		if (brandPojo == null) {
 			throw new ApiException("Brand with given ID does not exist, id: " + id);
 		}
-		return brandpojo;
+		return brandPojo;
 	}
 	
 	@Transactional
 	public BrandPojo checkBrandCategory(String brand,String category){
-		BrandPojo b=dao.selectBrandCategory(brand,category);
-		return b;
+		BrandPojo brandPojo=dao.selectBrandCategory(brand,category);
+		return brandPojo;
 	}
 }

@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api
 @RestController
-public class ReportApiContrller {
+public class ReportApiController {
 
 	@Autowired
 	private ReportDto dto;

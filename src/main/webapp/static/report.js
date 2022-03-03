@@ -95,6 +95,16 @@ function getOrderItemList(){
 	else{
 		input["category"]=JSON.parse(json).category;
 	}
+	var title=$("#title");
+	title.empty();
+	if(input["brand"]!="%"){
+		var row='<h4>Brand: '+input["brand"]+'</h4><br>';
+		title.append(row);
+	}
+	if(input["category"]!="%"){
+		var row='<h4>Category: '+input["category"]+'</h4><br>';
+		title.append(row);
+	}
 	pass=input;
 	input=JSON.stringify(input);
 	$.ajax({
@@ -401,10 +411,7 @@ function init(){
 	$('#get-product').click(getProduct);
 	$('#get-inventory').click(getInventory);
 	$('#search').click(getOrderItemList);
-	
 }
-
-
 
 $(document).ready(init);
 $(document).ready(getBrandList);

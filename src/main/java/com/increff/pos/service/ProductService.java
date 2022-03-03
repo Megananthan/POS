@@ -17,9 +17,9 @@ public class ProductService {
 	private ProductDao dao;
 
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(ProductPojo productpojo) throws ApiException {
-		checkBarcode(productpojo);
-		dao.insert(productpojo);
+	public void add(ProductPojo productPojo) throws ApiException {
+		checkBarcode(productPojo);
+		dao.insert(productPojo);
 	}
 
 	@Transactional(rollbackOn = ApiException.class)
@@ -34,23 +34,23 @@ public class ProductService {
 	
 
 	@Transactional(rollbackOn  = ApiException.class)
-	public void update(int id, ProductPojo productpojo) throws ApiException {
-		ProductPojo newProductpojo = checkId(id);
-		if(!(productpojo.getBarcode().equals(newProductpojo.getBarcode())))
+	public void update(int id, ProductPojo productPojo) throws ApiException {
+		ProductPojo newProductPojo = checkId(id);
+		if(!(productPojo.getBarcode().equals(newProductPojo.getBarcode())))
 			{
-			checkBarcode(productpojo);
+			checkBarcode(productPojo);
 			}
-		newProductpojo.setBarcode(productpojo.getBarcode());
-		newProductpojo.setBrand_category(productpojo.getBrand_category());
-		newProductpojo.setName(productpojo.getName());
-		newProductpojo.setMrp(productpojo.getMrp());
-		dao.update(newProductpojo);
+		newProductPojo.setBarcode(productPojo.getBarcode());
+		newProductPojo.setBrand_category(productPojo.getBrand_category());
+		newProductPojo.setName(productPojo.getName());
+		newProductPojo.setMrp(productPojo.getMrp());
+		dao.update(newProductPojo);
 	}
 	
 	@Transactional
-	public void checkBarcode(ProductPojo productpojo) throws ApiException
+	public void checkBarcode(ProductPojo productPojo) throws ApiException
 	{
-		if(!(dao.selectBarcode(productpojo.getBarcode())==null))
+		if(!(dao.selectBarcode(productPojo.getBarcode())==null))
 		{
 			throw new ApiException("Barcode already exist");
 		}
@@ -58,30 +58,30 @@ public class ProductService {
 
 	@Transactional
 	public ProductPojo checkId(int id) throws ApiException {
-		ProductPojo productpojo = dao.select(id);
-		if (productpojo == null) {
+		ProductPojo productPojo = dao.select(id);
+		if (productPojo == null) {
 			throw new ApiException("Product with given ID does not exist, id: " + id);
 		}
-		return productpojo;
+		return productPojo;
 	}
 	
 	@Transactional
 	public ProductPojo fetchProduct(String barcode) throws ApiException
 	{
-		ProductPojo productpojo=dao.selectBarcode(barcode);
-		if(productpojo==null)
+		ProductPojo productPojo=dao.selectBarcode(barcode);
+		if(productPojo==null)
 		{
 			throw new ApiException("Given barcode doesnot exist");
 		}
-		return(productpojo);
+		return(productPojo);
 		
 	}
 	
 	@Transactional
 	public ProductPojo getByName(String name) throws ApiException
 	{
-		ProductPojo productpojo=dao.selectName(name);
-		return(productpojo);
+		ProductPojo productPojo=dao.selectName(name);
+		return(productPojo);
 		
 	}
 	

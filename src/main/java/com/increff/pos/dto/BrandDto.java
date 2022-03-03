@@ -19,46 +19,46 @@ import com.increff.pos.service.BrandService;
 public class BrandDto {
 	
 	@Autowired
-	private BrandService brandservice;
+	private BrandService brandService;
 	
-	public void add(BrandForm brandform) throws ApiException {
-		Normalizer.normalize(brandform);
-		Validate.isEmpty(brandform);
-		BrandPojo brandpojo=Convertor.convert(brandform);
-		brandservice.add(brandpojo);
+	public void add(BrandForm brandForm) throws ApiException {
+		Normalizer.normalize(brandForm);
+		Validate.isEmpty(brandForm);
+		BrandPojo brandPojo=Convertor.convert(brandForm);
+		brandService.add(brandPojo);
 	}
 	
 	public BrandData get(int id) throws ApiException {
-		BrandPojo brandpojo = brandservice.get(id);
-		return Convertor.convert(brandpojo);
+		BrandPojo brandPojo = brandService.get(id);
+		return Convertor.convert(brandPojo);
 	}
 	
 	public List<BrandData> getAll() {
-		List<BrandPojo> listpojo = brandservice.getAll();
-		List<BrandData> listdata = new ArrayList<BrandData>();
-		for (BrandPojo brandpojo : listpojo) {
-			listdata.add(Convertor.convert(brandpojo));
+		List<BrandPojo> listPojo = brandService.getAll();
+		List<BrandData> listData = new ArrayList<BrandData>();
+		for (BrandPojo brandPojo : listPojo) {
+			listData.add(Convertor.convert(brandPojo));
 		}
-		return listdata;
+		return listData;
 	}
 	
 	public List<String> getAllBrand() {
-		return brandservice.getAllBrand();
+		return brandService.getAllBrand();
 	}
 	
 	public List<String> getAllCategory() {
-		return brandservice.getAllCategory();
+		return brandService.getAllCategory();
 	}
 	
 	
 	public List<String> getCategoryWithBrand(String brand) {
-		return brandservice.getCategoryWithBrand(brand);
+		return brandService.getCategoryWithBrand(brand);
 	}
 	
-	public void update(int id,BrandForm brandform) throws ApiException {
-		Normalizer.normalize(brandform);
-		Validate.isEmpty(brandform);
-		BrandPojo brandpojo = Convertor.convert(brandform);
-		brandservice.update(id, brandpojo);
+	public void update(int id,BrandForm brandForm) throws ApiException {
+		Normalizer.normalize(brandForm);
+		Validate.isEmpty(brandForm);
+		BrandPojo brandPojo = Convertor.convert(brandForm);
+		brandService.update(id, brandPojo);
 	}
 }

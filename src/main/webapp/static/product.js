@@ -10,6 +10,7 @@ function isEmpty(json){
 	datas["barcode"]=JSON.parse(json)["barcode"];
 	datas["name"]=JSON.parse(json)["name"];
 	datas["mrp"]=JSON.parse(json)["mrp"];
+	
 	if(JSON.parse(json)["brand"]==null){
 		datas["brand"]="";
 	}
@@ -22,7 +23,10 @@ function isEmpty(json){
 	else{
 		datas["category"]=JSON.parse(json)["category"];
 	}
-	return(JSON.stringify(datas));
+	datas=JSON.stringify(datas);
+	datas["mrp"]=Number(datas["mrp"]).toFixed(2);
+	datas["mrp"]=datas["mrp"]+"";
+	return(datas);
 }
 
 //BUTTON ACTIONS
@@ -40,6 +44,8 @@ function addProduct(event){
        	'Content-Type': 'application/json'
        },	   
 	   success: function(response) {
+			var responseMessage="Product added successfully";
+			errorDisplay('success',responseMessage);
 	   		getProductList();  
 	   },
 	   error: function(response){
@@ -69,6 +75,8 @@ function updateProduct(event){
        	'Content-Type': 'application/json'
        },	   
 	   success: function(response) {
+			var responseMessage="Product updated successfully";
+			errorDisplay('success',responseMessage);
 	   		getProductList();   
 	   },
 	   error: function(response){
@@ -141,6 +149,7 @@ function uploadRows(){
 	processCount++;
 	
 	var json = JSON.stringify(row);
+	json=isEmpty(json);
 	var url = getProductUrl();
 
 	//Make ajax call
@@ -154,6 +163,8 @@ function uploadRows(){
 	   success: function(response) {
 	   		uploadRows();  
 			getProductList();
+			var responseMessage="All Product added successfully";
+			errorDisplay('success',responseMessage);
 	   },
 	   error: function(response){
 		row.error=JSON.parse(response.responseText).message

@@ -25,62 +25,62 @@ import com.increff.pos.service.ProductService;
 public class ProductDto {
 	
 	@Autowired
-	private ProductService productservice;
+	private ProductService productService;
 	
 	@Autowired
-	private BrandService brandservice;
+	private BrandService brandService;
 	
 	@Autowired
-	private InventoryService inventoryservice;
+	private InventoryService inventoryService;
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(ProductForm productform) throws ApiException {
-		Normalizer.normalize(productform);
-		Validate.isEmpty(productform);
-		BrandPojo brandpojo=fetchBrand(productform);
-		ProductPojo productpojo=Convertor.convert(productform,brandpojo.getId());
-		productservice.add(productpojo);
-		InventoryForm inventoryform=new InventoryForm();
-		inventoryform.setId(productpojo.getId());
-		inventoryform.setQuantity(0);
-		inventoryservice.add(Convertor.convert(inventoryform));
+	public void add(ProductForm productForm) throws ApiException {
+		Normalizer.normalize(productForm);
+		Validate.isEmpty(productForm);
+		BrandPojo brandPojo=fetchBrand(productForm);
+		ProductPojo productPojo=Convertor.convert(productForm,brandPojo.getId());
+		productService.add(productPojo);
+		InventoryForm inventoryForm=new InventoryForm();
+		inventoryForm.setId(productPojo.getId());
+		inventoryForm.setQuantity(0);
+		inventoryService.add(Convertor.convert(inventoryForm));
 	}
 	
 	public ProductData get(int id) throws ApiException {
-		ProductPojo productpojo = productservice.get(id);
-		return fetchProduct(productpojo);
+		ProductPojo productPojo = productService.get(id);
+		return fetchProduct(productPojo);
 	}
 	
 	public List<ProductData> getAll() throws ApiException {
-		List<ProductPojo> listpojo = productservice.getAll();
-		List<ProductData> listdata = new ArrayList<ProductData>();
-		for (ProductPojo p : listpojo) {
-			listdata.add(fetchProduct(p));
+		List<ProductPojo> listPojo = productService.getAll();
+		List<ProductData> listData = new ArrayList<ProductData>();
+		for (ProductPojo productPojo : listPojo) {
+			listData.add(fetchProduct(productPojo));
 		}
-		return listdata;
+		return listData;
 	}
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public void update(int id,ProductForm productform) throws ApiException {
-		Normalizer.normalize(productform);
-		Validate.isEmpty(productform);
-		BrandPojo brandpojo=fetchBrand(productform);
-		ProductPojo productpojo=Convertor.convert(productform,brandpojo.getId());
-		productservice.update(id,productpojo);
+	public void update(int id,ProductForm productForm) throws ApiException {
+		Normalizer.normalize(productForm);
+		Validate.isEmpty(productForm);
+		BrandPojo brandPojo=fetchBrand(productForm);
+		ProductPojo productPojo=Convertor.convert(productForm,brandPojo.getId());
+		productService.update(id,productPojo);
 	}
 	
-	public BrandPojo fetchBrand(ProductForm productform) throws ApiException
+	public BrandPojo fetchBrand(ProductForm productForm) throws ApiException
 	{
-		BrandPojo brandpojo=brandservice.checkBrandCategory(productform.getBrand(), productform.getCategory());
-		if (brandpojo== null) {
-			throw new ApiException("Given Brand Category pair does not exist \n brand: " + productform.getBrand()+" category: "+ productform.getCategory());
+		BrandPojo brandPojo=brandService.checkBrandCategory(productForm.getBrand(), productForm.getCategory());
+		if (brandPojo== null) {
+			throw new ApiException("Given Brand Category pair does not exist \n brand: " + productForm.getBrand()+" category: "+ productForm.getCategory());
 		}
-		return brandpojo;
+		return brandPojo;
 	}
 	
-	public ProductData fetchProduct(ProductPojo productpojo) throws ApiException
+	public ProductData fetchProduct(ProductPojo productPojo) throws ApiException
 	{
-		BrandPojo brandpojo=brandservice.get(productpojo.getBrand_category());
-		return(Convertor.convert(productpojo,brandpojo.getBrand(),brandpojo.getCategory()));
+		BrandPojo brandPojo=brandService.get(productPojo.getBrand_category());
+		return(Convertor.convert(productPojo,brandPojo.getBrand(),brandPojo.getCategory()));
 	}
 }

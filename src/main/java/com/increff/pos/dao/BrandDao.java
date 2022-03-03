@@ -13,9 +13,9 @@ import com.increff.pos.pojo.BrandPojo;
 @Repository
 public class BrandDao extends AbstractDao {
 
-	private static String select_id = "select b from BrandPojo b where id=:id";
-	private static String select_all = "select b from BrandPojo b";
-	private static String select_brand_category = "select b from BrandPojo b where brand=:brand and category=:category";
+	private static String SELECT_ID = "select b from BrandPojo b where id=:id";
+	private static String SELECT_ALL = "select b from BrandPojo b";
+	private static String SELECT_BRAND_CATEGORY = "select b from BrandPojo b where brand=:brand and category=:category";
 
 	@Transactional
 	public void insert(BrandPojo b) {
@@ -24,14 +24,14 @@ public class BrandDao extends AbstractDao {
 
 	@Transactional(readOnly = true)
 	public BrandPojo select(int id) {
-		TypedQuery<BrandPojo> query = getQuery(select_id, BrandPojo.class);
+		TypedQuery<BrandPojo> query = getQuery(SELECT_ID, BrandPojo.class);
 		query.setParameter("id", id);
 		return getSingle(query);
 	}
 
 	@Transactional(readOnly = true)
 	public List<BrandPojo> selectAll() {
-		TypedQuery<BrandPojo> query = getQuery(select_all, BrandPojo.class);
+		TypedQuery<BrandPojo> query = getQuery(SELECT_ALL, BrandPojo.class);
 		return query.getResultList();
 	}
 
@@ -59,7 +59,7 @@ public class BrandDao extends AbstractDao {
 
 	@Transactional(readOnly = true)
 	public BrandPojo selectBrandCategory(String brand, String category) {
-		TypedQuery<BrandPojo> query = getQuery(select_brand_category, BrandPojo.class);
+		TypedQuery<BrandPojo> query = getQuery(SELECT_BRAND_CATEGORY, BrandPojo.class);
 		query.setParameter("brand", brand);
 		query.setParameter("category", category);
 		return getSingle(query);

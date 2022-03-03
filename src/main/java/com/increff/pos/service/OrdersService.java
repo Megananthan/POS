@@ -19,11 +19,6 @@ public class OrdersService {
 		dao.insert(p);
 	}
 
-	@Transactional
-	public void delete(int id) {
-		dao.delete(id);
-	}
-
 	@Transactional(rollbackOn = ApiException.class)
 	public OrdersPojo get(int id) throws ApiException {
 		return checkId(id);

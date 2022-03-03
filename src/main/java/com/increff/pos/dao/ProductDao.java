@@ -12,10 +12,10 @@ import com.increff.pos.pojo.ProductPojo;
 @Repository
 public class ProductDao extends AbstractDao {
 
-	private static String select_id = "select p from ProductPojo p where id=:id";
-	private static String select_all = "select p from ProductPojo p";
-	private static String select_barcode = "select p from ProductPojo p where barcode=:barcode";
-	private static String select_name = "select p from ProductPojo p where name=:name";
+	private static String SELECT_ID = "select p from ProductPojo p where id=:id";
+	private static String SELECT_ALL = "select p from ProductPojo p";
+	private static String SELECT_BARCODE = "select p from ProductPojo p where barcode=:barcode";
+	private static String SELECT_NAME = "select p from ProductPojo p where name=:name";
 
 	@Transactional
 	public void insert(ProductPojo p) {
@@ -24,27 +24,27 @@ public class ProductDao extends AbstractDao {
 	
 	@Transactional(readOnly = true)
 	public ProductPojo select(int id) {
-		TypedQuery<ProductPojo> query = getQuery(select_id, ProductPojo.class);
+		TypedQuery<ProductPojo> query = getQuery(SELECT_ID, ProductPojo.class);
 		query.setParameter("id", id);
 		return getSingle(query);
 	}
 
 	@Transactional(readOnly = true)
 	public List<ProductPojo> selectAll() {
-		TypedQuery<ProductPojo> query = getQuery(select_all, ProductPojo.class);
+		TypedQuery<ProductPojo> query = getQuery(SELECT_ALL, ProductPojo.class);
 		return query.getResultList();
 	}
 	
 	@Transactional(readOnly = true)
 	public ProductPojo selectBarcode(String barcode) {
-		TypedQuery<ProductPojo> query = getQuery(select_barcode, ProductPojo.class);
+		TypedQuery<ProductPojo> query = getQuery(SELECT_BARCODE, ProductPojo.class);
 		query.setParameter("barcode", barcode);
 		return getSingle(query);
 	}
 	
 	@Transactional(readOnly = true)
 	public ProductPojo selectName(String name) {
-		TypedQuery<ProductPojo> query = getQuery(select_name, ProductPojo.class);
+		TypedQuery<ProductPojo> query = getQuery(SELECT_NAME, ProductPojo.class);
 		query.setParameter("name", name);
 		return getSingle(query);
 	}

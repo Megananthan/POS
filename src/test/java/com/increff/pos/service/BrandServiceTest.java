@@ -1,6 +1,7 @@
 package com.increff.pos.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,83 +18,101 @@ public class BrandServiceTest extends AbstractUnitTest {
 	
 	@Test
 	public void testAdd() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		service.add(brandpojo);
-		BrandPojo db=dao.selectAll().get(0);
-		assertEquals(brandpojo.getBrand(),db.getBrand());
-		assertEquals(brandpojo.getCategory(),db.getCategory());
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		service.add(brandPojo);
+		BrandPojo result=dao.selectAll().get(0);
+		assertEquals(brandPojo.getBrand(),result.getBrand());
+		assertEquals(brandPojo.getCategory(),result.getCategory());
+	}
+	
+	@Test
+	public void testAddNegative() throws ApiException {
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		service.add(brandPojo);
+		try {
+			service.add(brandPojo);
+			fail("Brand category already exist");
+		}
+		catch(ApiException e){
+			assertEquals(e.getMessage(),"Brand category pair already exist");
+		}
 	}
 	
 	@Test
 	public void testGet() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
-		BrandPojo result=service.get(brandpojo.getId());
-		assertEquals(result.getBrand(),brandpojo.getBrand());
-		assertEquals(result.getCategory(),brandpojo.getCategory());
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
+		BrandPojo result=service.get(brandPojo.getId());
+		assertEquals(result.getBrand(),brandPojo.getBrand());
+		assertEquals(result.getCategory(),brandPojo.getCategory());
+	}
+	
+	@Test
+	public void testGetNegative() throws ApiException {
+		try {
+			service.get(12);
+			fail("Brand category does not exist");
+		}
+		catch(ApiException e){
+			assertEquals(e.getMessage(),"Brand with given ID does not exist, id: 12");
+		}
+		
 	}
 	
 	@Test
 	public void testGetAll() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
 		assertEquals(service.getAll().size(),dao.selectAll().size());
 	}
 	
 	@Test
 	public void testGetAllBrand() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
 		assertEquals(service.getAllBrand().size(),dao.selectAllBrand().size());
 	}
 	
 	@Test
 	public void testGetAllCategory() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
 		assertEquals(service.getAllCategory().size(),dao.selectAllCategory().size());
 	}
 	
 	@Test
 	public void testGetCategoryWithBrand() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
-		assertEquals(service.getCategoryWithBrand(brandpojo.getBrand()).get(0),brandpojo.getCategory());
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
+		assertEquals(service.getCategoryWithBrand(brandPojo.getBrand()).get(0),brandPojo.getCategory());
 	}
 	
 	@Test
 	public void testUpdate() throws ApiException {
-		BrandPojo brandpojo = new BrandPojo();
-		brandpojo.setBrand("puma");
-		brandpojo.setCategory("cloth");
-		dao.insert(brandpojo);
-		BrandPojo updated_brandpojo = new BrandPojo();
-		updated_brandpojo.setBrand("nike");
-		updated_brandpojo.setCategory("footwear");
-		service.update(brandpojo.getId(),updated_brandpojo);
-		BrandPojo result=dao.select(brandpojo.getId());
-		assertEquals(result.getBrand(),updated_brandpojo.getBrand());
-		assertEquals(result.getCategory(),updated_brandpojo.getCategory());
+		BrandPojo brandPojo = new BrandPojo();
+		brandPojo.setBrand("puma");
+		brandPojo.setCategory("cloth");
+		dao.insert(brandPojo);
+		BrandPojo updatedBrandPojo = new BrandPojo();
+		updatedBrandPojo.setBrand("nike");
+		updatedBrandPojo.setCategory("footwear");
+		service.update(brandPojo.getId(),updatedBrandPojo);
+		BrandPojo result=dao.select(brandPojo.getId());
+		assertEquals(result.getBrand(),updatedBrandPojo.getBrand());
+		assertEquals(result.getCategory(),updatedBrandPojo.getCategory());
 	}
-
-//	@Test
-//	public void testCheckBrandCategoryPair() throws ApiException {
-//		BrandPojo brandpojo = new BrandPojo();
-//		brandpojo.setBrand("puma");
-//		brandpojo.setCategory("cloth");
-//		dao.insert(brandpojo);
-//		assertEquals(ApiException.class,service.checkBrandCategory(brandpojo.getBrand(), brandpojo.getCategory()));
-//	}
 }

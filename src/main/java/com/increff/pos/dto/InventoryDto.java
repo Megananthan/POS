@@ -23,56 +23,56 @@ import com.increff.pos.service.ProductService;
 public class InventoryDto {
 	
 	@Autowired
-	private InventoryService inventoryservice;
+	private InventoryService inventoryService;
 	
 	@Autowired
-	private ProductService productservice;
+	private ProductService productService;
 		
 	@Transactional(rollbackOn = ApiException.class)
-	public void add(InventoryData inventorydata) throws ApiException {
-		Normalizer.normalize(inventorydata);
-		Validate.isEmpty(inventorydata);
-		ProductPojo productpojo=productservice.getByName(inventorydata.getName());
-		if(productpojo==null)
+	public void add(InventoryData inventoryData) throws ApiException {
+		Normalizer.normalize(inventoryData);
+		Validate.isEmpty(inventoryData);
+		ProductPojo productPojo=productService.getByName(inventoryData.getName());
+		if(productPojo==null)
 		{
 			throw new ApiException("Product doesnot exist");
 		}
-		InventoryForm inventoryform=new InventoryForm();
-		inventoryform.setId(productpojo.getId());
-		InventoryPojo inventorypojo=inventoryservice.get(productpojo.getId());
-		if(inventorypojo==null)
+		InventoryForm inventoryForm=new InventoryForm();
+		inventoryForm.setId(productPojo.getId());
+		InventoryPojo inventoryPojo=inventoryService.get(productPojo.getId());
+		if(inventoryPojo==null)
 		{	
-			inventoryform.setQuantity(inventorydata.getQuantity());
-			inventoryservice.add(Convertor.convert(inventoryform));
+			inventoryForm.setQuantity(inventoryData.getQuantity());
+			inventoryService.add(Convertor.convert(inventoryForm));
 		}
 		else 
 		{	
-			int quantity=inventorypojo.getQuantity()+inventorydata.getQuantity();
-			inventoryform.setQuantity(quantity);
-			update(inventoryform.getId(),inventoryform);
+			int quantity=inventoryPojo.getQuantity()+inventoryData.getQuantity();
+			inventoryForm.setQuantity(quantity);
+			update(inventoryForm.getId(),inventoryForm);
 		}
 	}
 	
 	public InventoryData get(int id) throws ApiException {
-		InventoryPojo inventorypojo = inventoryservice.get(id);
-		ProductPojo productpojo=productservice.get(id);
-		return Convertor.convert(inventorypojo,productpojo.getName(),productpojo.getBarcode());
+		InventoryPojo inventoryPojo = inventoryService.get(id);
+		ProductPojo productPojo=productService.get(id);
+		return Convertor.convert(inventoryPojo,productPojo.getName(),productPojo.getBarcode());
 	}
 	
 	public List<InventoryData> getAll() throws ApiException {
-		List<InventoryPojo> listpojo = inventoryservice.getAll();
-		List<InventoryData> listdata = new ArrayList<InventoryData>();
-		for (InventoryPojo inventorypojo : listpojo) {
-			ProductPojo p=productservice.get(inventorypojo.getId());
-			listdata.add(Convertor.convert(inventorypojo,p.getName(),p.getBarcode()));
+		List<InventoryPojo> listPojo = inventoryService.getAll();
+		List<InventoryData> listData = new ArrayList<InventoryData>();
+		for (InventoryPojo inventoryPojo : listPojo) {
+			ProductPojo productPojo=productService.get(inventoryPojo.getId());
+			listData.add(Convertor.convert(inventoryPojo,productPojo.getName(),productPojo.getBarcode()));
 		}
-		return listdata;
+		return listData;
 	}
 	
-	public void update(int id,InventoryForm inventoryform) throws ApiException {
-		Validate.isEmpty(inventoryform);
-		InventoryPojo inventorypojo = Convertor.convert(inventoryform);
-		inventoryservice.update(id, inventorypojo);
+	public void update(int id,InventoryForm inventoryForm) throws ApiException {
+		Validate.isEmpty(inventoryForm);
+		InventoryPojo inventoryPojo = Convertor.convert(inventoryForm);
+		inventoryService.update(id, inventoryPojo);
 	}
 	
 }

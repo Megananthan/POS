@@ -29,48 +29,48 @@ import com.increff.pos.service.ProductService;
 public class OrderItemDto {
 	
 	@Autowired
-	private ProductService productservice;
+	private ProductService productService;
 	
 	@Autowired
-	private InventoryService inventoryservice;
+	private InventoryService inventoryService;
 	
 	@Autowired
-	private OrderItemService orderitemservice;
+	private OrderItemService orderitemService;
 	
 	@Autowired
-	private OrdersService orderservice;
+	private OrdersService orderService;
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public ItemData checkbarcode(OrderItemForm f) throws ApiException {
-		Normalizer.normalize(f);
-		Validate.isEmpty(f);
-		ProductPojo p=productservice.fetchProduct(f.getBarcode());
-		InventoryPojo i=inventoryservice.get(p.getId());
-		if(i==null)
+	public ItemData checkbarcode(OrderItemForm orderItemForm) throws ApiException {
+		Normalizer.normalize(orderItemForm);
+		Validate.isEmpty(orderItemForm);
+		ProductPojo productPojo=productService.fetchProduct(orderItemForm.getBarcode());
+		InventoryPojo inventoryPojo=inventoryService.get(productPojo.getId());
+		if(inventoryPojo==null)
 		{
 			throw new ApiException("Given product is not present in Inventory");
 		}
-		if(i.getQuantity()<f.getQuantity())
+		if(inventoryPojo.getQuantity()<orderItemForm.getQuantity())
 		{
-			throw new ApiException("The given quantity of product is not present in inventory \n Invemtory quantity :"+i.getQuantity());
+			throw new ApiException("The given quantity of product is not present in inventory \n Invemtory quantity :"+inventoryPojo.getQuantity());
 		}
-		return Convertor.convert(p,f.getQuantity(),i.getQuantity());
+		return Convertor.convert(productPojo,orderItemForm.getQuantity(),inventoryPojo.getQuantity());
 	}
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public int add(List<ItemForm> f) throws ApiException, IOException, FOPException, TransformerException {
-		OrdersPojo p=Convertor.convert();
-		orderservice.add(p);
+	public int add(List<ItemForm> itemForm) throws ApiException, IOException, FOPException, TransformerException {
+		OrdersPojo orderPojo=Convertor.convert();
+		orderService.add(orderPojo);
 		InventoryPojo inventory=new InventoryPojo();
-		PDFConvertor.jaxbObjectToXML(Convertor.convert(p.getId(),p.getTime(),f));
+		PDFConvertor.jaxbObjectToXML(Convertor.convert(orderPojo.getId(),orderPojo.getTime(),itemForm));
 		PDFConvertor.convertToPDF();
-		for(ItemForm i : f) {
+		for(ItemForm i : itemForm) {
 			Validate.isEmpty(i);
 			inventory.setId(i.getProductId());
 			inventory.setQuantity(i.getQuantity());
-			inventoryservice.order(inventory);
-			orderitemservice.add(Convertor.convert(i,p.getId()));
+			inventoryService.order(inventory);
+			orderitemService.add(Convertor.convert(i,orderPojo.getId()));
 		}
-		return p.getId();
+		return orderPojo.getId();
 	}
 }

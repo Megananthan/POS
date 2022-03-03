@@ -23,7 +23,9 @@ function updateInventory(event){
        	'Content-Type': 'application/json'
        },	   
 	   success: function(response) {
-	   		getInventoryList();   
+	   		getInventoryList();
+			var responseMessage="All Inventory updated successfully";
+			errorDisplay('success',responseMessage);   
 	   },
 	   error: function(response){
 		var responseMessage=JSON.parse(response.responseText).message;
@@ -100,7 +102,9 @@ function uploadRows(){
        },	   
 	   success: function(response) {
 	   		uploadRows();
-			getInventoryList();  
+			getInventoryList();
+			var responseMessage="All Inventory updated successfully";
+			errorDisplay('success',responseMessage);  
 	   },
 	   error: function(response){
 		row.error=JSON.parse(response.responseText).message

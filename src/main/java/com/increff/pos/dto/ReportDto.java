@@ -31,69 +31,69 @@ import com.increff.pos.service.ProductService;
 public class ReportDto {
 
 	@Autowired
-	private BrandService brandservice;
+	private BrandService brandService;
 
 	@Autowired
-	private ProductService productservice;
+	private ProductService productService;
 
 	@Autowired
-	private InventoryService inventoryservice;
+	private InventoryService inventoryService;
 	
 	@Autowired
-	private OrderItemService orderitemservice;
+	private OrderItemService orderitemService;
 
 	public List<InventoryData> getInventory() throws ApiException {
 		
-		List<InventoryPojo> listpojo = inventoryservice.getAll();
-		List<InventoryData> listdata = new ArrayList<InventoryData>();
-		for (InventoryPojo i : listpojo) {
-			ProductPojo p=productservice.get(i.getId());
-			listdata.add(Convertor.convert(i,p.getName(),p.getBarcode()));
+		List<InventoryPojo> listPojo = inventoryService.getAll();
+		List<InventoryData> listData = new ArrayList<InventoryData>();
+		for (InventoryPojo inventoryPojo : listPojo) {
+			ProductPojo productPojo=productService.get(inventoryPojo.getId());
+			listData.add(Convertor.convert(inventoryPojo,productPojo.getName(),productPojo.getBarcode()));
 		}
-		return listdata;
+		return listData;
 		
 	}
 
 	public List<ProductData> getProduct() throws ApiException {
 		
-		List<ProductPojo> listpojo = productservice.getAll();
-		List<ProductData> listdata = new ArrayList<ProductData>();
-		for (ProductPojo p : listpojo) {
-			listdata.add(fetchProduct(p));
+		List<ProductPojo> listPojo = productService.getAll();
+		List<ProductData> listData = new ArrayList<ProductData>();
+		for (ProductPojo productPojo : listPojo) {
+			listData.add(fetchProduct(productPojo));
 		}
-		return listdata;
+		return listData;
 
 	}
 
 	public List<BrandData> getBrand() throws ApiException {
-		List<BrandPojo> listpojo = brandservice.getAll();
-		List<BrandData> listdata = new ArrayList<BrandData>();
-		for (BrandPojo p : listpojo) {
-			listdata.add(Convertor.convert(p));
+		List<BrandPojo> listPojo = brandService.getAll();
+		List<BrandData> listData = new ArrayList<BrandData>();
+		for (BrandPojo brandPojo : listPojo) {
+			listData.add(Convertor.convert(brandPojo));
 		}
-		return listdata;
+		return listData;
 	}
 	
 	
-	public ProductData fetchProduct(ProductPojo p) throws ApiException
+	public ProductData fetchProduct(ProductPojo productPojo) throws ApiException
 	{
-		BrandPojo b=brandservice.get(p.getBrand_category());
-		return(Convertor.convert(p,b.getBrand(),b.getCategory()));
+		BrandPojo brandPojo=brandService.get(productPojo.getBrand_category());
+		return(Convertor.convert(productPojo,brandPojo.getBrand(),brandPojo.getCategory()));
 	}
 	
 	@Transactional(rollbackOn = ApiException.class)
-	public List<OrderItemData> getOrderItem(ReportForm form) throws ApiException, ParseException
+	public List<OrderItemData> getOrderItem(ReportForm reportForm) throws ApiException, ParseException
 	{   
-		Normalizer.normalize(form);
-		Validate.isEmpty(form);
-		List<OrderItemPojo> listpojo = orderitemservice.getOrderItemList(form);
-		List<OrderItemData> listdata = new ArrayList<OrderItemData>();
-		for (OrderItemPojo p : listpojo) {
-			ProductPojo product=productservice.get(p.getProductId());
-			BrandPojo brand=brandservice.get(product.getBrand_category());
-			listdata.add(Convertor.convert(p,product.getBarcode(),product.getName(),brand.getBrand(),brand.getCategory()));
+		Normalizer.normalize(reportForm);
+		Validate.isEmpty(reportForm);
+		List<OrderItemPojo> listPojo = orderitemService.getOrderItemList(reportForm);
+		List<OrderItemData> listData = new ArrayList<OrderItemData>();
+		for (OrderItemPojo orderItemPojo : listPojo) {
+			ProductPojo productPojo=productService.get(orderItemPojo.getProductId());
+			BrandPojo brandPojo=brandService.get(productPojo.getBrand_category());
+			listData.add(Convertor.convert(orderItemPojo,productPojo.getBarcode(),productPojo.getName(),brandPojo.getBrand(),brandPojo.getCategory()));
 		}
-		return listdata;
+		return listData;
 	}
 	
 

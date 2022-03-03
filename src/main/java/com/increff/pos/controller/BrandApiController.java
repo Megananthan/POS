@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api
 @RestController
-public class BrandApiContrller {
+public class BrandApiController {
 
 	@Autowired
 	private BrandDto dto;
